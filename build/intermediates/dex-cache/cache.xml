@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\suj1\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.5\293bbe05bfb5ca812c849e4d1f494f56509d5a6e\gdx-backend-android-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="293bbe05bfb5ca812c849e4d1f494f56509d5a6e">
+        <dex dex="C:\Users\suj1\Documents\2016-11-28 CSSE483\Puzzle\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-backend-android-1.9.5_e14549f14d9b497c1553ace439f4f99e5e4440a2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\suj1\Documents\2016-11-28 CSSE483\Puzzle\android\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c042f4fe535108ff6baf4dcf9e4853f8c721e68b">
+        <dex dex="C:\Users\suj1\Documents\2016-11-28 CSSE483\Puzzle\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_a24bd946f9d525605c5e4ff801a36b38b7152226\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\suj1\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.5\dc65bb2f51828c58b1b2b3ac585357204d54ee5f\gdx-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dc65bb2f51828c58b1b2b3ac585357204d54ee5f">
+        <dex dex="C:\Users\suj1\Documents\2016-11-28 CSSE483\Puzzle\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-1.9.5_319cb87f9ec56fd38437ae7e9c57a6befb7b59b2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\suj1\Documents\2016-11-28 CSSE483\Puzzle\android\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0915ba8f152b5a26803b0d8f8848870c4472965e">
+        <dex dex="C:\Users\suj1\Documents\2016-11-28 CSSE483\Puzzle\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_a8aee0a1a86ffb4d64d1e26fab27067d95fd1b55\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\suj1\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-box2d\1.9.5\c8098219abfe00b849cc43d461b1105fea3a2944\gdx-box2d-1.9.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c8098219abfe00b849cc43d461b1105fea3a2944">
+        <dex dex="C:\Users\suj1\Documents\2016-11-28 CSSE483\Puzzle\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-box2d-1.9.5_c010e25c0b4eae692041548af131632f0d1ef6fc\classes.dex" />
+    </item>
+
+</items>

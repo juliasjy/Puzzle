@@ -1,0 +1,7 @@
+#Wed Jan 18 23:03:54 EST 2017
+base.0=C\:\\Users\\suj1\\Documents\\2016-11-28 CSSE483\\Puzzle\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_a24bd946f9d525605c5e4ff801a36b38b7152226
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=C\:\\Users\\suj1\\Documents\\2016-11-28 CSSE483\\Puzzle\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_a8aee0a1a86ffb4d64d1e26fab27067d95fd1b55\\classes.dex
+base.1=C\:\\Users\\suj1\\Documents\\2016-11-28 CSSE483\\Puzzle\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_a8aee0a1a86ffb4d64d1e26fab27067d95fd1b55
+file.0=C\:\\Users\\suj1\\Documents\\2016-11-28 CSSE483\\Puzzle\\android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_a24bd946f9d525605c5e4ff801a36b38b7152226\\classes.dex

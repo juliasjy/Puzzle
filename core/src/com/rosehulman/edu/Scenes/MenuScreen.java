@@ -36,17 +36,14 @@ public class MenuScreen implements Screen {
         this.game = game;
         this.gameCam = new OrthographicCamera();
         this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
-
-        this.start_button = new Texture("button-start-game.png");
-        this.help_button = new Texture("help.jpeg");
-        this.setting_button = new Texture("setting.png");
-        this.level_button = new Texture("select-level.png");
+        this.start_button = new Texture("button_start.png");
+        this.help_button = new Texture("button_help.png");
+        this.setting_button = new Texture("button_setting.png");
+        this.level_button = new Texture("button_level.png");
         this.background = new Texture("background.jpg");
-
 
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
     }
-
 
     @Override
     public void show() {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="13" tilewidth="16" tileheight="16" nextobjectid="21">
+ <tileset firstgid="1" name="marioSet" tilewidth="16" tileheight="16" tilecount="924" columns="33">
+  <image source="marioSet.png" width="528" height="448"/>
+ </tileset>
+ <layer name="Background" width="20" height="13">
+  <data encoding="base64" compression="zlib">
+   eJz7zcTA8HsUj+JRPIqBGAASRAEE
+  </data>
+ </layer>
+ <layer name="Graphics" width="20" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYKQyBgFmKEYGzFhoXGps8ZiHj8YlxzBq3qh5g8g8ZIArDxASo3a+BWEAmL0BjQ==
+  </data>
+ </layer>
+ <objectgroup name="Bound">
+  <object id="3" x="0" y="0" width="16" height="208"/>
+  <object id="4" x="16" y="0" width="304" height="16"/>
+  <object id="5" x="304" y="16" width="16" height="192"/>
+  <object id="6" x="16" y="192" width="288" height="16"/>
+ </objectgroup>
+ <objectgroup name="bricks">
+  <object id="8" x="32" y="16" width="32" height="160"/>
+  <object id="9" x="80" y="32" width="16" height="160"/>
+  <object id="10" x="112" y="16" width="16" height="160"/>
+  <object id="11" x="144" y="16" width="16" height="176"/>
+  <object id="12" x="176" y="16" width="32" height="160"/>
+  <object id="13" x="224" y="32" width="16" height="160"/>
+  <object id="14" x="256" y="16" width="16" height="160"/>
+ </objectgroup>
+ <objectgroup name="Destination">
+  <object id="15" x="288" y="16" width="16" height="16"/>
+  <object id="20" x="304" y="-80"/>
+ </objectgroup>
+</map>
