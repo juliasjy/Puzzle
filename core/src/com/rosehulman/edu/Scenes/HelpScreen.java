@@ -19,7 +19,7 @@ import com.rosehulman.edu.Utils.Utils;
  * Created by suj1 on 1/22/2017.
  */
 
-public class SettingScreen extends MyScreen {
+public class HelpScreen extends MyScreen {
     private Texture background;
     private Texture return_button;
     private OrthographicCamera gameCam;
@@ -27,7 +27,7 @@ public class SettingScreen extends MyScreen {
     private Puzzle game;
     private Stage stage;
 
-    public SettingScreen(Puzzle game) {
+    public HelpScreen(Puzzle game) {
         this.game = game;
         this.gameCam = new OrthographicCamera();
         this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
