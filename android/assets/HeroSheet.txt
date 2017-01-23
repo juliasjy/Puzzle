@@ -1,0 +1,12 @@
+HeroSheet.png
+size: 256, 384
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Charactervector
+  rotate: false
+  xy: 0, 0
+  size: 256, 384
+  orig: 256, 384
+  offset: 0, 0
+  index: -1

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosehulman.edu.Puzzle;
@@ -37,6 +39,7 @@ public class MenuScreen implements Screen {
         this.gameCam = new OrthographicCamera();
         this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
         this.start_button = new Texture("button_start.png");
+
         this.help_button = new Texture("button_help.png");
         this.setting_button = new Texture("button_setting.png");
         this.level_button = new Texture("button_level.png");

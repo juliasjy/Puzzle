@@ -1,9 +1,12 @@
 package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -13,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosehulman.edu.Puzzle;
+import com.rosehulman.edu.Sprites.Hero;
 import com.rosehulman.edu.Tools.B2WorldCreator;
 import com.rosehulman.edu.Utils.Utils;
 
@@ -33,10 +37,15 @@ public class PlayScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+
+    private TextureAtlas atlas;
+
     //box2d related
     private World world;
     private Box2DDebugRenderer b2dr;
-    private B2WorldCreator b2wc ;
+    private B2WorldCreator b2wc;
+
+    private Hero hero;
 
     public PlayScreen(Puzzle game) {
 
@@ -48,7 +57,8 @@ public class PlayScreen implements Screen {
         this.mapLoader = new TmxMapLoader();
         this.map = mapLoader.load("Puzzle.tmx");
 
-        this.renderer = new OrthogonalTiledMapRenderer(map, 1 / this.game.PPM);
+        this.atlas = new TextureAtlas("HeroSheet.txt");
+        this.renderer = new OrthogonalTiledMapRenderer(map, 1.0f / this.game.PPM);
 
 
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
@@ -60,6 +70,7 @@ public class PlayScreen implements Screen {
         this.b2wc = new B2WorldCreator();
         b2wc.addStaicBodiesToWorld(world, map);
 
+        hero = new Hero(world,this);
     }
 
     @Override
@@ -75,6 +86,10 @@ public class PlayScreen implements Screen {
 
         renderer.render();
         b2dr.render(world, this.gameCam.combined);
+
+        this.game.getBatch().begin();
+        this.hero.draw(this.game.getBatch());
+        this.game.getBatch().end();
     }
 
     @Override
@@ -104,15 +119,19 @@ public class PlayScreen implements Screen {
 
 
     public void handleInput(float dt) {
-        if (Gdx.input.justTouched()) {
-            this.gameCam.position.x = this.gameCam.position.x + dt;
-        }
+        this.hero.handleInput(dt);
     }
+
 
     public void update(float dt) {
         this.handleInput(dt);
         world.step(1/60f, 6, 2);
         gameCam.update();
+        hero.update(dt);
         renderer.setView(gameCam);
+    }
+
+    public TextureAtlas getAtlas() {
+        return this.atlas;
     }
 }
