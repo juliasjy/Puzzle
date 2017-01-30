@@ -7,9 +7,8 @@ import com.rosehulman.edu.Scenes.MenuScreen;
 
 public class Puzzle extends Game {
 	private SpriteBatch batch;
-	Texture img;
-	public static final int V_WIDTH = 320;
-	public static final int V_HEIGHT = 208;
+	public static final int V_WIDTH = 480;
+	public static final int V_HEIGHT = 800;
 	public static final float PPM = 100;
 
 

@@ -2,6 +2,7 @@ package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,6 +42,7 @@ public class MenuScreen extends MyScreen{
     private Puzzle game;
 
     private Stage stage;
+    private Music backgroundMusic;
 
     public MenuScreen(Puzzle game) {
         this.game = game;
@@ -52,7 +54,15 @@ public class MenuScreen extends MyScreen{
         this.level_button = new Texture("button_level.png");
         this.background = new Texture("background.jpg");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
+        createMusic();
         create();
+    }
+
+    public void createMusic(){
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/level1.wav"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.1f);
+        backgroundMusic.play();
     }
 
     public void create () {
@@ -77,6 +87,7 @@ public class MenuScreen extends MyScreen{
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new PlayScreen(game));
                 Gdx.app.log("Click", "Game");
+                backgroundMusic.dispose();
             }
         };
         Actor startActor = createActorForButton(this.start_button, startButtonPosition, width, height, startButtonListener);
@@ -91,6 +102,7 @@ public class MenuScreen extends MyScreen{
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new LevelScreen(game));
                 Gdx.app.log("Click", "Level");
+                backgroundMusic.dispose();
             }
         };
         Actor levelActor = createActorForButton(this.level_button, levelButtonPosition, width, height, levelButtonListener);
@@ -105,6 +117,7 @@ public class MenuScreen extends MyScreen{
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new SettingScreen(game));
                 Gdx.app.log("Click", "Setting");
+                backgroundMusic.dispose();
             }
         };
         Actor settingActor = createActorForButton(this.setting_button, settingButtonPosition, width, height, settingButtonListener);
@@ -119,6 +132,7 @@ public class MenuScreen extends MyScreen{
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new HelpScreen(game));
                 Gdx.app.log("Click", "Help");
+                backgroundMusic.dispose();
             }
         };
         Actor helpActor = createActorForButton(this.help_button, helpButtonPosition, width, height, helpButtonListener);
@@ -157,7 +171,6 @@ public class MenuScreen extends MyScreen{
 
     @Override
     public void pause() {
-
     }
 
     @Override
@@ -173,6 +186,7 @@ public class MenuScreen extends MyScreen{
     @Override
     public void dispose() {
         this.stage.dispose();
+        this.backgroundMusic.dispose();
     }
 
     public void handleInput() {
