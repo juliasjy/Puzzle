@@ -1,6 +1,7 @@
 package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,32 +23,17 @@ import com.rosehulman.edu.Utils.Utils;
 public class HelpScreen extends MyScreen {
     private Texture background;
     private Texture return_button;
-    private OrthographicCamera gameCam;
-    private Viewport gamePort;
-    private Puzzle game;
-    private Stage stage;
 
-    public HelpScreen(Puzzle game) {
-        this.game = game;
-        this.gameCam = new OrthographicCamera();
-        this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
+    public HelpScreen(Puzzle game, MenuScreen parent) {
+        super(game, parent);
         this.background = new Texture("background.jpg");
         this.return_button = new Texture("button_return.png");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
-        create();
+        createStage();
     }
 
-    private void create(){
-        stage = new Stage(this.gamePort);
-        Gdx.input.setInputProcessor(this.stage);
-        stage.getViewport().update((int)Utils.scaleWithPPM(this.game.V_WIDTH),(int) Utils.scaleWithPPM(this.game.V_HEIGHT));
-
-        createActors(stage);
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    private void createActors(Stage stage){
-
+    @Override
+    public void createActors(Stage stage){
         float side = (Utils.scaleWithPPM(this.game.V_WIDTH) * 0.1f);
         Vector2 returnButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (0.05f) ) / 2,
                 (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.05f)) / 2);
@@ -57,7 +43,7 @@ public class HelpScreen extends MyScreen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new MenuScreen(game));
+                game.setScreen(parentScreen);
                 Gdx.app.log("Click", "Menu");
             }
         };
@@ -69,11 +55,12 @@ public class HelpScreen extends MyScreen {
     @Override
     public void show() {
         stage = new Stage(this.gamePort);
-        Gdx.input.setInputProcessor(this.stage);
         stage.getViewport().update((int) Utils.scaleWithPPM(this.game.V_WIDTH),(int) Utils.scaleWithPPM(this.game.V_HEIGHT));
 
         createActors(stage);
         Gdx.input.setInputProcessor(stage);
+
+        Gdx.app.log("Click", "show");
     }
 
     @Override

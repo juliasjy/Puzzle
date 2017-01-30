@@ -20,13 +20,7 @@ import com.rosehulman.edu.Utils.Utils;
  * Created by mot on 1/14/17.
  */
 
-public class PlayScreen implements Screen {
-
-    //game related
-    private Puzzle game;
-    private OrthographicCamera gameCam;
-    private Viewport gamePort;
-
+public class PlayScreen extends MyScreen {
 
     //tile map related
     private TmxMapLoader mapLoader;
@@ -38,21 +32,14 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator b2wc ;
 
-    public PlayScreen(Puzzle game) {
-
-
-        this.game = game;
-        this.gameCam = new OrthographicCamera();
-        this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
-
+    public PlayScreen(Puzzle game, MyScreen parent) {
+        super(game, parent);
         this.mapLoader = new TmxMapLoader();
         this.map = mapLoader.load("Puzzle.tmx");
 
         this.renderer = new OrthogonalTiledMapRenderer(map, 1 / this.game.PPM);
-
-
+        
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
-
 
         world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();

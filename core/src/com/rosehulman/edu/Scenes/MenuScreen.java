@@ -37,44 +37,20 @@ public class MenuScreen extends MyScreen{
     private float BUTTON_WIDTH_RATIO = 0.3f;
     private float BUTTON_HEIGHT_RATIO = 0.13f;
 
-    private OrthographicCamera gameCam;
-    private Viewport gamePort;
-    private Puzzle game;
-
-    private Stage stage;
-    private Music backgroundMusic;
-
-    public MenuScreen(Puzzle game) {
-        this.game = game;
-        this.gameCam = new OrthographicCamera();
-        this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
+    public MenuScreen(Puzzle game, MyScreen parent) {
+        super(game, parent);
         this.start_button = new Texture("button_start.png");
         this.help_button = new Texture("button_help.png");
         this.setting_button = new Texture("button_setting.png");
         this.level_button = new Texture("button_level.png");
         this.background = new Texture("background.jpg");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
-        createMusic();
-        create();
+        createMusic("music/level1.wav");
+        createStage();
     }
 
-    public void createMusic(){
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/level1.wav"));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0.1f);
-        backgroundMusic.play();
-    }
-
-    public void create () {
-        stage = new Stage(this.gamePort);
-        Gdx.input.setInputProcessor(this.stage);
-        stage.getViewport().update((int)Utils.scaleWithPPM(this.game.V_WIDTH),(int) Utils.scaleWithPPM(this.game.V_HEIGHT));
-
-        createActors(stage);
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    public void createActors(Stage stage){
+    @Override
+    public void createActors(final Stage stage){
         float width = (Utils.scaleWithPPM(this.game.V_WIDTH) * BUTTON_WIDTH_RATIO);
         float height = (Utils.scaleWithPPM(this.game.V_HEIGHT) * BUTTON_HEIGHT_RATIO);
         Vector2 startButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
@@ -85,7 +61,8 @@ public class MenuScreen extends MyScreen{
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new PlayScreen(game));
+                game.setScreen(new PlayScreen(game, MenuScreen.this));
+                stage.dispose();
                 Gdx.app.log("Click", "Game");
                 backgroundMusic.dispose();
             }
@@ -100,9 +77,8 @@ public class MenuScreen extends MyScreen{
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new LevelScreen(game));
+                game.setScreen(new LevelScreen(game, MenuScreen.this));
                 Gdx.app.log("Click", "Level");
-                backgroundMusic.dispose();
             }
         };
         Actor levelActor = createActorForButton(this.level_button, levelButtonPosition, width, height, levelButtonListener);
@@ -115,9 +91,8 @@ public class MenuScreen extends MyScreen{
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new SettingScreen(game));
+                game.setScreen(new SettingScreen(game, MenuScreen.this));
                 Gdx.app.log("Click", "Setting");
-                backgroundMusic.dispose();
             }
         };
         Actor settingActor = createActorForButton(this.setting_button, settingButtonPosition, width, height, settingButtonListener);
@@ -130,9 +105,8 @@ public class MenuScreen extends MyScreen{
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new HelpScreen(game));
+                game.setScreen(new HelpScreen(game, MenuScreen.this));
                 Gdx.app.log("Click", "Help");
-                backgroundMusic.dispose();
             }
         };
         Actor helpActor = createActorForButton(this.help_button, helpButtonPosition, width, height, helpButtonListener);
@@ -145,7 +119,8 @@ public class MenuScreen extends MyScreen{
 
     @Override
     public void show() {
-
+        Gdx.app.log("Click", "show");
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -171,20 +146,22 @@ public class MenuScreen extends MyScreen{
 
     @Override
     public void pause() {
+        Gdx.app.log("Click", "pause");
     }
 
     @Override
     public void resume() {
-
+        Gdx.app.log("Click", "resume");
     }
 
     @Override
     public void hide() {
-
+        Gdx.app.log("Click", "hide");
     }
 
     @Override
     public void dispose() {
+        Gdx.app.log("Click", "dispose");
         this.stage.dispose();
         this.backgroundMusic.dispose();
     }
