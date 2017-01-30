@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sprites.Weapon.commonWeapon;
 import com.rosehulman.edu.Utils.Utils;
 
 /**
@@ -24,10 +26,8 @@ public class Hero extends Sprite {
     public Body body;
 
     private enum State {LEFT, UP, RIGHT, DOWN}
-
     private State currentState;
-
-
+    private int count = 2;
 
     //animation related
     private Animation animation_left;
@@ -35,14 +35,15 @@ public class Hero extends Sprite {
     private Animation animation_up;
     private Animation animation_down;
     private float stateTimer;
-
-
-
     private PlayScreen sc;
 
 
+
+
+
+
     public Hero(World world, PlayScreen sc) {
-        super(sc.getAtlas().getRegions().first());
+        super(sc.getHeroAtlas().getRegions().first());
         this.world = world;
         this.sc = sc;
 
@@ -50,7 +51,7 @@ public class Hero extends Sprite {
         this.stateTimer = 0;
 
         define();
-        setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(16), Utils.scaleWithPPM(16));
+        setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(32), Utils.scaleWithPPM(32));
 
         configureAnimation();
 
@@ -60,14 +61,14 @@ public class Hero extends Sprite {
 
     public void define() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(15 / Puzzle.PPM, 15 / Puzzle.PPM);
+        bdef.position.set(32 / Puzzle.PPM, 32 / Puzzle.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bdef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Utils.scaleWithPPM(12) / 2, Utils.scaleWithPPM(12) / 2);
         FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(12 / Puzzle.PPM);
         fdef.shape = shape;
         body.createFixture(fdef);
     }
@@ -101,21 +102,21 @@ public class Hero extends Sprite {
 
     public void handleInput(float dt) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && this.body.getLinearVelocity().y <= 1 ) {
-            this.body.setLinearVelocity(0, 1);
+            this.body.setLinearVelocity(0, 5);
             this.setNextState(State.UP);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && body.getLinearVelocity().x <= 1) {
-            this.body.setLinearVelocity(1, 0);
+            this.body.setLinearVelocity(5, 0);
             this.setNextState(State.RIGHT);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && body.getLinearVelocity().x >= -1) {
-            this.body.setLinearVelocity(-1, 0);
+            this.body.setLinearVelocity(-5, 0);
             this.setNextState(State.LEFT);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && body.getLinearVelocity().y >= -1) {
-            this.body.setLinearVelocity(0, -1);
+            this.body.setLinearVelocity(0, -5);
             this.setNextState(State.DOWN);
         }
         if (!Gdx.input.isKeyPressed(Input.Keys.UP)  && !Gdx.input.isKeyPressed(Input.Keys.RIGHT) &&
@@ -151,9 +152,18 @@ public class Hero extends Sprite {
     }
 
     public void update(float dt) {
+
         setPosition(this.body.getPosition().x - getWidth() / 2, this.body.getPosition().y - getHeight() / 2);
         this.stateTimer += dt;
         this.setRegion(this.getNextFrame(dt));
+
+        count ++;
+        if (count > 20) {
+            count = 0;
+            commonWeapon weapon = new commonWeapon(this.world, this.sc, this.body.getPosition());
+//            weapon.createBody();
+            this.sc.addBullet(weapon);
+        }
     }
 
 }

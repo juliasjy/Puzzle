@@ -29,18 +29,18 @@ public class B2WorldCreator {
 
 
         //bound
-        for (MapObject object:  map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rec = ((RectangleMapObject) object).getRectangle();
-            Bound bd = new Bound(world, map, rec);
-            bd.createBody();
-        }
-
-        //bricks
-        for (MapObject object:  map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rec = ((RectangleMapObject) object).getRectangle();
-            Brick br = new Brick(world, map, rec);
-            br.createBody();
-        }
+//        for (MapObject object:  map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+//            Rectangle rec = ((RectangleMapObject) object).getRectangle();
+//            Bound bd = new Bound(world, map, rec);
+//            bd.createBody();
+//        }
+//
+//        //bricks
+//        for (MapObject object:  map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+//            Rectangle rec = ((RectangleMapObject) object).getRectangle();
+//            Brick br = new Brick(world, map, rec);
+//            br.createBody();
+//        }
         //destination
 
     }
