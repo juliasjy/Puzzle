@@ -57,12 +57,6 @@ public class PlayScreen implements Screen {
     private Hero hero;
 
     public PlayScreen(Puzzle game) {
-
-
-        this.game = game;
-        this.gameCam = new OrthographicCamera();
-        this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
-
         this.mapLoader = new TmxMapLoader();
         this.map = mapLoader.load("tiledMap/Fly.tmx");
 
@@ -70,9 +64,12 @@ public class PlayScreen implements Screen {
         this.bulletsAtlas = new TextureAtlas("SpriteSheet/bullets.txt");
         this.renderer = new OrthogonalTiledMapRenderer(map, 1.0f / this.game.PPM);
 
+        this.game = game;
+
+        this.gameCam = new OrthographicCamera();
+        this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
 
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
-
 
         world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();

@@ -1,13 +1,11 @@
 package com.rosehulman.edu;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.rosehulman.edu.Scenes.MenuScreen;
 
 public class Puzzle extends Game {
 	private SpriteBatch batch;
-	Texture img;
 	public static final int V_WIDTH = 640;
 	public static final int V_HEIGHT = 32 * 40;
 	public static final float PPM = 100;
@@ -16,7 +14,7 @@ public class Puzzle extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		this.setScreen(new MenuScreen(this));
+		this.setScreen(new MenuScreen(this, null));
 	}
 
 	@Override
