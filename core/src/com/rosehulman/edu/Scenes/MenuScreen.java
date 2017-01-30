@@ -6,6 +6,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosehulman.edu.Puzzle;
@@ -16,33 +27,107 @@ import com.rosehulman.edu.Utils.Utils;
  * Created by mot on 1/14/17.
  */
 
-public class MenuScreen implements Screen {
+public class MenuScreen extends MyScreen{
     private Texture start_button;
     private Texture help_button;
     private Texture setting_button;
     private Texture level_button;
     private Texture background;
-
-    public static final double BUTTON_HEIGHT_RATIO = 0.15;
-    public static final double BUTTON_WIDTH_RATIO = 0.3;
-
-
+    private float BUTTON_WIDTH_RATIO = 0.3f;
+    private float BUTTON_HEIGHT_RATIO = 0.13f;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Puzzle game;
+
+    private Stage stage;
 
     public MenuScreen(Puzzle game) {
         this.game = game;
         this.gameCam = new OrthographicCamera();
         this.gamePort = new StretchViewport(Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT), gameCam);
         this.start_button = new Texture("button_start.png");
+
         this.help_button = new Texture("button_help.png");
         this.setting_button = new Texture("button_setting.png");
         this.level_button = new Texture("button_level.png");
         this.background = new Texture("background.jpg");
-
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
+        create();
+    }
+
+    public void create () {
+        stage = new Stage(this.gamePort);
+        Gdx.input.setInputProcessor(this.stage);
+        stage.getViewport().update((int)Utils.scaleWithPPM(this.game.V_WIDTH),(int) Utils.scaleWithPPM(this.game.V_HEIGHT));
+
+        createActors(stage);
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    public void createActors(Stage stage){
+        float width = (Utils.scaleWithPPM(this.game.V_WIDTH) * BUTTON_WIDTH_RATIO);
+        float height = (Utils.scaleWithPPM(this.game.V_HEIGHT) * BUTTON_HEIGHT_RATIO);
+        Vector2 startButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
+                                                  (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.8f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener startButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new PlayScreen(game));
+                Gdx.app.log("Click", "Game");
+            }
+        };
+        Actor startActor = createActorForButton(this.start_button, startButtonPosition, width, height, startButtonListener);
+
+        Vector2 levelButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
+                                                  (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.3f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener levelButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new LevelScreen(game));
+                Gdx.app.log("Click", "Level");
+            }
+        };
+        Actor levelActor = createActorForButton(this.level_button, levelButtonPosition, width, height, levelButtonListener);
+
+        Vector2 settingButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
+                                                    (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.8f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener settingButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new SettingScreen(game));
+                Gdx.app.log("Click", "Setting");
+            }
+        };
+        Actor settingActor = createActorForButton(this.setting_button, settingButtonPosition, width, height, settingButtonListener);
+
+        Vector2 helpButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
+                                                 (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.3f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener helpButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new HelpScreen(game));
+                Gdx.app.log("Click", "Help");
+            }
+        };
+        Actor helpActor = createActorForButton(this.help_button, helpButtonPosition, width, height, helpButtonListener);
+
+        stage.addActor(startActor);
+        stage.addActor(helpActor);
+        stage.addActor(levelActor);
+        stage.addActor(settingActor);
     }
 
     @Override
@@ -60,32 +145,10 @@ public class MenuScreen implements Screen {
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         batch.draw(this.background, 0, 0, Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT));
-        batch.draw(this.start_button, (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
-                                      (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.8  - this.BUTTON_HEIGHT_RATIO)) / 2,
-                                      (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * BUTTON_WIDTH_RATIO),
-                                      (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * BUTTON_HEIGHT_RATIO));
-
-        batch.draw(this.level_button, (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
-                (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.3  - this.BUTTON_HEIGHT_RATIO)) / 2,
-                (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * BUTTON_WIDTH_RATIO),
-                (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * BUTTON_HEIGHT_RATIO));
-
-
-        batch.draw(this.setting_button, (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
-                (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.8  - this.BUTTON_HEIGHT_RATIO)) / 2,
-                (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * BUTTON_WIDTH_RATIO),
-                (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * BUTTON_HEIGHT_RATIO));
-
-        batch.draw(this.help_button, (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 2,
-                (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.3  - this.BUTTON_HEIGHT_RATIO)) / 2,
-                (float) (Utils.scaleWithPPM(this.game.V_WIDTH) * BUTTON_WIDTH_RATIO),
-                (float) (Utils.scaleWithPPM(this.game.V_HEIGHT) * BUTTON_HEIGHT_RATIO));
-
-
-
 
         batch.end();
-
+        this.stage.act(delta);
+        this.stage.draw();
     }
 
     @Override
@@ -110,22 +173,14 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.background.dispose();
-        this.start_button.dispose();
-        this.setting_button.dispose();
-        this.help_button.dispose();
-        this.level_button.dispose();
+        this.stage.dispose();
     }
 
-
     public void handleInput() {
-        if (Gdx.input.justTouched()) {
-            System.out.println("hello world");
-            this.game.setScreen(new PlayScreen(this.game));
-        }
+
     }
 
     public void update(float dt) {
-        this.handleInput();
+        handleInput();
     }
 }
