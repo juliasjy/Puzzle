@@ -1,29 +1,33 @@
-package com.rosehulman.edu.Sprites;
+package com.rosehulman.edu.Sprites.GameObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Scenes.PlayScreen;
-import com.rosehulman.edu.Sprites.Weapon.commonWeapon;
+
+import com.rosehulman.edu.Sprites.Bullet.Bullet;
+import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
+import com.rosehulman.edu.Sprites.Weapon.SampleWeapon;
+import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.Utils;
 
 /**
  * Created by mot on 1/14/17.
  */
 
-public class Hero extends Sprite {
-    public World world;
-    public Body body;
+public class Hero extends GameObject {
+    private Weapon weapon;
+
 
     private enum State {LEFT, UP, RIGHT, DOWN}
     private State currentState;
@@ -35,43 +39,60 @@ public class Hero extends Sprite {
     private Animation animation_up;
     private Animation animation_down;
     private float stateTimer;
-    private PlayScreen sc;
 
 
 
 
 
 
-    public Hero(World world, PlayScreen sc) {
-        super(sc.getHeroAtlas().getRegions().first());
-        this.world = world;
-        this.sc = sc;
-
+    public Hero(World world, PlayScreen playScreen, Rectangle bounds) {
+        super(world, playScreen, bounds);
+        this.setRegion(playScreen.getHeroAtlas().getRegions().first());
         this.currentState = State.DOWN;
         this.stateTimer = 0;
-
-        define();
+        this.collisionDamage = 10;
+        this.health = 200;
         setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(32), Utils.scaleWithPPM(32));
-
         configureAnimation();
-
-
+        this.weapon = new SampleWeapon(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
     }
 
+    @Override
+    public void onHit(Bullet bullet) {
+        System.out.println("taken damage from bullet " + bullet.getDamage());
+        this.health -= bullet.getDamage();
+    }
 
-    public void define() {
+    @Override
+    public void onHit(GameObject object) {
+        System.out.println("Taken damage " + object.collisionDamage);
+        this.health -= object.getCollisionDamage();
+    }
+
+    @Override
+    protected Body createPhysicsBody(Rectangle bounds) {
+        //TODO use bounds;
+
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / Puzzle.PPM, 32 / Puzzle.PPM);
+        bdef.position.set(50 / Puzzle.PPM, 50 / Puzzle.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
-
-        body = world.createBody(bdef);
-
+        Body body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
+
+        fdef.filter.categoryBits = Constants.HERO_BIT;
+        fdef.filter.maskBits = Constants.ENEMY_BIT | Constants.ENEMY_BULLET_BIT | Constants.OBSTACLE_BIT;
+
+
         CircleShape shape = new CircleShape();
         shape.setRadius(12 / Puzzle.PPM);
         fdef.shape = shape;
         body.createFixture(fdef);
+
+
+
+        return body;
     }
+
 
 
     private TextureRegion getNextFrame(float dt) {
@@ -95,6 +116,7 @@ public class Hero extends Sprite {
         }
         return region;
     }
+
 
     public void setNextState(State state) {
         this.currentState = state;
@@ -151,19 +173,44 @@ public class Hero extends Sprite {
         this.animation_right = new Animation(0.1f, frames);
     }
 
-    public void update(float dt) {
 
+
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
         setPosition(this.body.getPosition().x - getWidth() / 2, this.body.getPosition().y - getHeight() / 2);
         this.stateTimer += dt;
         this.setRegion(this.getNextFrame(dt));
 
-        count ++;
-        if (count > 20) {
-            count = 0;
-            commonWeapon weapon = new commonWeapon(this.world, this.sc, this.body.getPosition());
-//            weapon.createBody();
-            this.sc.addBullet(weapon);
+        this.weapon.update(dt);
+
+        if (this.health <= 0) {
+            //TODO
         }
+
+    }
+
+
+
+    @Override
+    public void onSetToInactiveState() {
+
+    }
+
+    @Override
+    public void onSetToActiveState() {
+
+    }
+
+    @Override
+    public void onSetToDeadState() {
+        System.out.println("Hero died");
+    }
+
+    @Override
+    public void onSetToRemovableState() {
+
     }
 
 }

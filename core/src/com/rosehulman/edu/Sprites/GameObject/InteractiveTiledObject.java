@@ -1,4 +1,4 @@
-package com.rosehulman.edu.Sprites;
+package com.rosehulman.edu.Sprites.GameObject;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;

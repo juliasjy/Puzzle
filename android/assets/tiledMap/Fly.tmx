@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="250" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="250" tilewidth="32" tileheight="32" nextobjectid="81">
  <tileset firstgid="1" name="Cliff" tilewidth="32" tileheight="32" tilecount="240" columns="15">
   <image source="Cliff_tileset.png" width="503" height="518"/>
  </tileset>
@@ -25,4 +25,300 @@
    eJztW0mPTkEUrW7T2rguCWuEtTFYGZe0KWGNJT8BG0Oww8YQ7LAxBDtsDHtsDPErnLfoBPmq7jn1Xr96r9RJTtLpfH1f9/fde8659V47NwxcnHbuEngZvDLdvt5t1LgD3gXvBeo1354HzgcXgAvBRYF6T/HiZ+Bz8EWg3mJwCbgUXAYuB1cE6r1HjQ/gR/BToJ4HV4LHp5w7Aa7C16sD9b6hxnfwB/gzUG8NuBY8g1pnwfX4ekOgHoON4CZwM7gF3Apua1FvF7gb3APuBfeB+1vUmwEPgYfBI+BR8NiE113F+3UNvN5B3zW4jzoPwIcd1XuJOq/A15F62/F57gB3TnVzzQOocxCc6ajeSdQ5BZ7uqB4LZcYZsDPO6pl33IwzetaAnXFGzxqwM87oWQN2xhk9a8DOeEU75NSXc/j8z4MXIn2g6MsN1LkJ3upInx+hzmPwSUf13qDOW/BdB7mlwWf8wBfwawe5hYF3fG5hUHNLGZqWK2ex12VylnJdFux1S0eurDYLK7N5p+maldlUXbMym6prVmZTdc3KbEPUtV89zJyVX9RsZeUXdXez8ou6u1n5RYWVX8aA3NpmeaB3mrZZHqhqm+WBfWc2VRdyaluOs1MF7FnDLKz3nj1rYGH5Vh8e0RVKOMv8E23f+9y62yD2N3hX1q5saZGaKS0tUnVX1SILfWvRXKPeR/gbzNmjgrGfPapgsntp+cVCKZoxBG+NwbsyvJXNdKy3spmO9dYxnF8yOq7oEKPjig4xOq7oEKPjig4xOp47u/SJdeTrqkaO716dogOMRg4lj4Q0MDWPhDQwVQdiGpiSw2MamJLDYxrYZw5P2dFiv/vYd7SxQvEGJgMq3sBkQO94b2AyIOsN7Kyz3sDOOpuf2Vln83O9X1YmcmQ/Jbt4Z8+3kl2Y+VayCzPfSnZh5lvJLkN8nmEuUM9A26FEPR7CXhvTOu/0vTamdSl7bUzrUvbamNYx2vbv3hDTOkbb6t7Ao2poO5SooUMBs1sqZw7MbqloB7NblqAdjKcq+Z7xVCXfe2d7qpLvGU9V8j3jqUq+/1//r6M+A5IHNSO0Q6kZoc2uNcnb29xDnOTt3qXfQ5zk7UO5hxjy2lRfCHltqi/U55LGgZzPtzGeovQR4ylKHzGeovRRKZ7S53P8Kf4S28lKfEYlNkcp/hKboxR/ic1Rir+UMEdMXyu9z/S10vve2X3NvGYWTF8rvc/0tdL7TF8rvc/09dB27rHt1r8BV6Y1tg==
   </data>
  </layer>
+ <objectgroup name="Enemies">
+  <object id="5" x="544" y="7008" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="7" x="416" y="7008" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="8" x="160" y="7008" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="9" x="288" y="7008" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="10" x="32" y="7008" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="11" x="160" y="7232" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="12" x="416" y="7232" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="13" x="32" y="7232" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="14" x="288" y="7232" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="15" x="544" y="7232" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="23" x="160" y="6656" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="24" x="416" y="6656" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="25" x="32" y="6656" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="26" x="288" y="6656" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="27" x="544" y="6656" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="28" x="160" y="6432" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="29" x="416" y="6432" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="30" x="32" y="6432" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="31" x="288" y="6432" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="32" x="544" y="6432" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="33" x="128" y="6144" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="34" x="384" y="6144" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="35" x="0" y="6144" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="36" x="256" y="6144" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="37" x="512" y="6144" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="43" x="128" y="5728" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="44" x="384" y="5728" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="45" x="0" y="5728" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="46" x="256" y="5728" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="47" x="512" y="5728" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="53" x="160" y="5280" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="54" x="416" y="5280" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="55" x="32" y="5280" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="56" x="288" y="5280" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="57" x="544" y="5280" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="58" x="128" y="5088" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="59" x="384" y="5088" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="60" x="0" y="5088" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="61" x="256" y="5088" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="62" x="512" y="5088" width="96" height="96">
+   <properties>
+    <property name="class" value="sampleEnemy"/>
+    <property name="type" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="71" x="64" y="4512" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="73" x="288" y="4512" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="74" x="512" y="4512" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="75" x="160" y="4768" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="76" x="416" y="4768" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="77" x="288" y="4960" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="78" x="160" y="4288" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="79" x="416" y="4288" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="80" x="288" y="4128" width="64" height="64">
+   <properties>
+    <property name="class" value="enemy2"/>
+    <property name="type" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

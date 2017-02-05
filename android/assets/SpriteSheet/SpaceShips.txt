@@ -1,0 +1,187 @@
+SpaceShips.png
+size: 1020, 1188
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 0, 0
+  size: 124, 135
+  orig: 124, 135
+  offset: 0, 0
+  index: -1
+1B
+  rotate: false
+  xy: 124, 0
+  size: 124, 135
+  orig: 124, 135
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 248, 0
+  size: 134, 199
+  orig: 134, 199
+  offset: 0, 0
+  index: -1
+2B
+  rotate: false
+  xy: 382, 0
+  size: 134, 199
+  orig: 134, 199
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 516, 0
+  size: 182, 248
+  orig: 182, 248
+  offset: 0, 0
+  index: -1
+3B
+  rotate: false
+  xy: 698, 0
+  size: 182, 248
+  orig: 182, 248
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 880, 0
+  size: 120, 185
+  orig: 120, 185
+  offset: 0, 0
+  index: -1
+4B
+  rotate: false
+  xy: 0, 248
+  size: 130, 185
+  orig: 130, 185
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 130, 248
+  size: 98, 171
+  orig: 98, 171
+  offset: 0, 0
+  index: -1
+5B
+  rotate: false
+  xy: 228, 248
+  size: 98, 171
+  orig: 98, 171
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 326, 248
+  size: 170, 102
+  orig: 170, 102
+  offset: 0, 0
+  index: -1
+6B
+  rotate: false
+  xy: 496, 248
+  size: 170, 102
+  orig: 170, 102
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 666, 248
+  size: 140, 257
+  orig: 140, 257
+  offset: 0, 0
+  index: -1
+7B
+  rotate: false
+  xy: 806, 248
+  size: 140, 257
+  orig: 140, 257
+  offset: 0, 0
+  index: -1
+8
+  rotate: false
+  xy: 0, 505
+  size: 182, 232
+  orig: 182, 232
+  offset: 0, 0
+  index: -1
+8B
+  rotate: false
+  xy: 182, 505
+  size: 182, 232
+  orig: 182, 232
+  offset: 0, 0
+  index: -1
+9
+  rotate: false
+  xy: 364, 505
+  size: 230, 336
+  orig: 230, 336
+  offset: 0, 0
+  index: -1
+9B
+  rotate: false
+  xy: 594, 505
+  size: 230, 336
+  orig: 230, 336
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 824, 505
+  size: 116, 110
+  orig: 116, 110
+  offset: 0, 0
+  index: -1
+10B
+  rotate: false
+  xy: 0, 841
+  size: 116, 110
+  orig: 116, 110
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 116, 841
+  size: 398, 225
+  orig: 398, 225
+  offset: 0, 0
+  index: -1
+11B
+  rotate: false
+  xy: 514, 841
+  size: 398, 225
+  orig: 398, 225
+  offset: 0, 0
+  index: -1
+12
+  rotate: false
+  xy: 0, 1066
+  size: 342, 122
+  orig: 342, 122
+  offset: 0, 0
+  index: -1
+12B
+  rotate: false
+  xy: 342, 1066
+  size: 342, 122
+  orig: 342, 122
+  offset: 0, 0
+  index: -1
+13
+  rotate: false
+  xy: 684, 1066
+  size: 168, 104
+  orig: 168, 104
+  offset: 0, 0
+  index: -1
+13B
+  rotate: false
+  xy: 852, 1066
+  size: 168, 104
+  orig: 168, 104
+  offset: 0, 0
+  index: -1

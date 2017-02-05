@@ -34,8 +34,11 @@ public class commonWeapon extends Sprite {
         this.bounds = new Rectangle();
         this.stateTimer = 0;
         define(position);
-        setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(48), Utils.scaleWithPPM(48));
+        setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(32), Utils.scaleWithPPM(32));
         configureAnimation();
+//        this.setRotation(90);
+        setOrigin(this.getWidth() / 2, this.getHeight() / 2);
+        this.rotate(90);
     }
 
 
@@ -82,7 +85,7 @@ public class commonWeapon extends Sprite {
         int bulletWidth = 58;
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 8; i++) {
-            frames.add(new TextureRegion(getTexture(), 63 + i * 58, 30, bulletWidth, bulletHeight ));
+            frames.add(new TextureRegion(getTexture(), 63 + i * 58, 30, bulletWidth, bulletHeight));
         }
         this.animation = new Animation(0.1f, frames);
         frames.clear();
@@ -97,6 +100,8 @@ public class commonWeapon extends Sprite {
         setPosition(this.body.getPosition().x - getWidth() / 2, this.body.getPosition().y - getHeight() / 2);
         this.stateTimer += dt * 2;
         this.setRegion(this.getNextFrame(dt));
+//        setRotation(90);
+
     }
 
 }
