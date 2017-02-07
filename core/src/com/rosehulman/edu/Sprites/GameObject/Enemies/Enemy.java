@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sprites.Bullet.Bullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
+import com.rosehulman.edu.Utils.Constants;
 
 /**
  * Created by mot on 1/31/17.
@@ -28,6 +30,19 @@ public abstract class Enemy extends GameObject {
     protected TextureRegion getNextFrame(float dt) {
         return (TextureRegion) this.animation.getKeyFrame(stateTimer, true);
     }
+
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+    }
+
+    protected void deathCheck() {
+        if (this.health <= 0) {
+            this.setState(Constants.GameObjectState.DEAD);
+        }
+    }
+
 
 
 

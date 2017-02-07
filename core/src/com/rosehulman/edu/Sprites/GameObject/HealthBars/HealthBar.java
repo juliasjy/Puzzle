@@ -35,8 +35,7 @@ public class HealthBar extends Sprite implements Temporal {
 
         this.fgSprite = new Sprite(fg);
         this.bgSprite = new Sprite(bg);
-
-
+        update(0);
     }
 
     @Override

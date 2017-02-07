@@ -13,6 +13,6 @@ public class Constants {
     public static final short DESTROYED_BIT = 1;
     public static final short OBSTACLE_BIT = 32;
 
-    public enum GameObjectState {INACTIVE, ACTIVE, DEAD, REMOVABLE}
+    public enum GameObjectState {INACTIVE, ACTIVE, DEAD, CLEANING_PHYSICS_BODY, REMOVABLE}
 }
 

@@ -1,12 +1,12 @@
 bullets.png
-size: 849, 1023
+size: 1024, 1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-bullets
+55d17405a4c66
   rotate: false
   xy: 0, 0
-  size: 849, 1023
-  orig: 849, 1023
+  size: 1024, 1024
+  orig: 1024, 1024
   offset: 0, 0
-  index: -1
+  index: 1024

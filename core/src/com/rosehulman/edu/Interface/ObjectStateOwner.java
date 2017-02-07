@@ -14,4 +14,5 @@ public interface ObjectStateOwner extends Temporal {
     void onSetToActiveState();
     void onSetToDeadState();
     void onSetToRemovableState();
+    void onSetToCleaningPhysicsBodyState();
 }

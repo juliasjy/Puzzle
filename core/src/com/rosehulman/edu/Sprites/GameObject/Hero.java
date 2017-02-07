@@ -17,7 +17,7 @@ import com.rosehulman.edu.Scenes.PlayScreen;
 
 import com.rosehulman.edu.Sprites.Bullet.Bullet;
 import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
-import com.rosehulman.edu.Sprites.Weapon.SampleWeapon;
+import com.rosehulman.edu.Sprites.Weapon.HeroWeapons.HeroCommonWeapon;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.Utils;
 
@@ -26,12 +26,8 @@ import com.rosehulman.edu.Utils.Utils;
  */
 
 public class Hero extends GameObject {
-    private Weapon weapon;
-
-
     private enum State {LEFT, UP, RIGHT, DOWN}
     private State currentState;
-    private int count = 2;
 
     //animation related
     private Animation animation_left;
@@ -51,21 +47,18 @@ public class Hero extends GameObject {
         this.currentState = State.DOWN;
         this.stateTimer = 0;
         this.collisionDamage = 10;
-        this.health = 200;
+        this.health = 500;
         setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(32), Utils.scaleWithPPM(32));
         configureAnimation();
-        this.weapon = new SampleWeapon(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
     }
 
     @Override
     public void onHit(Bullet bullet) {
-        System.out.println("taken damage from bullet " + bullet.getDamage());
         this.health -= bullet.getDamage();
     }
 
     @Override
     public void onHit(GameObject object) {
-        System.out.println("Taken damage " + object.collisionDamage);
         this.health -= object.getCollisionDamage();
     }
 
@@ -75,7 +68,7 @@ public class Hero extends GameObject {
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(50 / Puzzle.PPM, 50 / Puzzle.PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.type = BodyDef.BodyType.KinematicBody;
         Body body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
 
@@ -88,11 +81,15 @@ public class Hero extends GameObject {
         fdef.shape = shape;
         body.createFixture(fdef);
 
-
+        body.setLinearVelocity(0, 1f);
 
         return body;
     }
 
+    @Override
+    protected Weapon configureWeapon() {
+        return new HeroCommonWeapon(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
+    }
 
 
     private TextureRegion getNextFrame(float dt) {
@@ -179,14 +176,13 @@ public class Hero extends GameObject {
     @Override
     public void update(float dt) {
         super.update(dt);
-        setPosition(this.body.getPosition().x - getWidth() / 2, this.body.getPosition().y - getHeight() / 2);
         this.stateTimer += dt;
         this.setRegion(this.getNextFrame(dt));
 
-        this.weapon.update(dt);
 
         if (this.health <= 0) {
             //TODO
+            this.playScreen.onHeroDie();
         }
 
     }
@@ -194,14 +190,10 @@ public class Hero extends GameObject {
 
 
     @Override
-    public void onSetToInactiveState() {
-
-    }
+    public void onSetToInactiveState() {}
 
     @Override
-    public void onSetToActiveState() {
-
-    }
+    public void onSetToActiveState() {}
 
     @Override
     public void onSetToDeadState() {
@@ -209,8 +201,9 @@ public class Hero extends GameObject {
     }
 
     @Override
-    public void onSetToRemovableState() {
+    public void onSetToRemovableState() {}
 
-    }
+    @Override
+    public void onSetToCleaningPhysicsBodyState() {}
 
 }

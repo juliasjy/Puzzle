@@ -44,6 +44,9 @@ public abstract class AbstractAnimationSprite extends Sprite implements ObjectSt
             case REMOVABLE:
                 this.onSetToRemovableState();
                 break;
+            case CLEANING_PHYSICS_BODY:
+                this.onSetToCleaningPhysicsBodyState();
+                break;
             default:
                 break;
         }

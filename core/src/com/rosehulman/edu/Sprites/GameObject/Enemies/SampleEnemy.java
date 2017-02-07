@@ -14,6 +14,9 @@ import com.rosehulman.edu.Scenes.PlayScreen;
 import com.rosehulman.edu.Sprites.Animation.BulletExplosion;
 import com.rosehulman.edu.Sprites.Bullet.Bullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
+import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
+import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.EnemyWeaponLinear;
+import com.rosehulman.edu.Sprites.Weapon.HeroWeapons.HeroCommonWeapon;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.SpriteUtils;
 import com.rosehulman.edu.Utils.Utils;
@@ -23,8 +26,6 @@ import com.rosehulman.edu.Utils.Utils;
  */
 
 public class SampleEnemy extends Enemy {
-
-
 
     public SampleEnemy(World world, PlayScreen playScreen, Rectangle bounds) {
         super(world, playScreen, bounds);
@@ -46,13 +47,23 @@ public class SampleEnemy extends Enemy {
     }
 
     @Override
-    public void onHit(Bullet bullet) {
+    public void onHit(Bullet bullet)
+    {
+        if (objectState != Constants.GameObjectState.ACTIVE) {
+            return;
+        }
         this.health -= bullet.getDamage();
+        deathCheck();
     }
 
     @Override
-    public void onHit(GameObject hero) {
+    public void onHit(GameObject hero)
+    {
+        if (objectState != Constants.GameObjectState.ACTIVE) {
+            return;
+        }
         this.health -= hero.getCollisionDamage();
+        deathCheck();
     }
 
 
@@ -78,16 +89,17 @@ public class SampleEnemy extends Enemy {
         fdef.shape = shape;
 
 
-
-
+//        fdef.isSensor = true;
         body.createFixture(fdef);
-
-
-        body.setLinearVelocity(0, -1);
+//        body.setLinearVelocity(0, -1);
         return body;
     }
 
-
+    @Override
+    protected Weapon configureWeapon() {
+        return new EnemyWeaponLinear(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
+//        return null;
+    }
 
 
     @Override
@@ -99,33 +111,35 @@ public class SampleEnemy extends Enemy {
     public void update(float dt) {
         super.update(dt);
         this.setRegion(this.getNextFrame(dt));
-        setPosition(this.body.getPosition().x - getWidth() / 2.0f, this.body.getPosition().y - getHeight() / 2.0f);
         this.stateTimer += dt * 2;
-        if (this.objectState == Constants.GameObjectState.REMOVABLE) {
-            world.destroyBody(body);
-            body.setUserData(null);
-            body = null;
-        }
     }
 
     @Override
     public void onSetToInactiveState() {
-
+        this.body.setActive(false);
+        System.out.println("Enemy set to inactive state");
     }
 
     @Override
     public void onSetToActiveState() {
-
+        System.out.println("Enemy set to active state");
+        this.body.setActive(true);
     }
 
     @Override
-    public void onSetToDeadState() {
-        System.out.println("Enemy died");
+    public void onSetToDeadState()
+    {
+        BulletExplosion be = new BulletExplosion(1f, this.getBoundingRectangle());
+        this.playScreen.addAnimationSprite(be);
+        this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
     }
 
     @Override
     public void onSetToRemovableState() {
-        BulletExplosion be = new BulletExplosion(1f, this.getBoundingRectangle());
-        this.playScreen.addAnimationSprite(be);
+
+    }
+
+    @Override
+    public void onSetToCleaningPhysicsBodyState() {
     }
 }

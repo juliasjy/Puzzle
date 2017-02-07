@@ -10,7 +10,7 @@ import com.rosehulman.edu.Scenes.PlayScreen;
  * Created by mot on 2/4/17.
  */
 
-public class BulletExplosion extends  AbstractAnimationSprite {
+public class BulletExplosion extends AbstractAnimationSprite {
 
 
 
@@ -52,6 +52,11 @@ public class BulletExplosion extends  AbstractAnimationSprite {
 
     @Override
     public void onSetToRemovableState() {
+
+    }
+
+    @Override
+    public void onSetToCleaningPhysicsBodyState() {
 
     }
 }
