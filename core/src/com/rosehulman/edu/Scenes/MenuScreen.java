@@ -1,25 +1,15 @@
 package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.rosehulman.edu.Sounds.MyMusic;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Utils.Utils;
 
@@ -36,6 +26,8 @@ public class MenuScreen extends MyScreen{
     private Texture background;
     private float BUTTON_WIDTH_RATIO = 0.3f;
     private float BUTTON_HEIGHT_RATIO = 0.13f;
+    private MyMusic music;
+    private boolean isMute = false;
 
     public MenuScreen(Puzzle game, MyScreen parent) {
         super(game, parent);
@@ -46,7 +38,7 @@ public class MenuScreen extends MyScreen{
         this.level_button = new Texture("button_level.png");
         this.background = new Texture("background.jpg");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
-        createMusic("music/level2.wav");
+        this.music = new MyMusic("music/main.wav", this.isMute);
         createStage();
     }
 
@@ -65,7 +57,7 @@ public class MenuScreen extends MyScreen{
                 game.setScreen(new PlayScreen(game));
                 stage.dispose();
                 Gdx.app.log("Click", "Game");
-                backgroundMusic.dispose();
+                music.disposeMusic();
             }
         };
         Actor startActor = createActorForButton(this.start_button, startButtonPosition, width, height, startButtonListener);
@@ -122,6 +114,7 @@ public class MenuScreen extends MyScreen{
     public void show() {
         Gdx.app.log("Click", "show");
         Gdx.input.setInputProcessor(stage);
+        this.music.startMusic();
     }
 
     @Override
@@ -148,11 +141,13 @@ public class MenuScreen extends MyScreen{
     @Override
     public void pause() {
         Gdx.app.log("Click", "pause");
+        this.music.pauseMusic();
     }
 
     @Override
     public void resume() {
         Gdx.app.log("Click", "resume");
+        this.music.contiuneMusic();
     }
 
     @Override
@@ -164,7 +159,7 @@ public class MenuScreen extends MyScreen{
     public void dispose() {
         Gdx.app.log("Click", "dispose");
         this.stage.dispose();
-        this.backgroundMusic.dispose();
+        this.music.disposeMusic();
     }
 
     public void handleInput() {

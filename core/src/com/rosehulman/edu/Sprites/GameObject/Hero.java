@@ -2,6 +2,7 @@ package com.rosehulman.edu.Sprites.GameObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Scenes.PlayScreen;
 
+import com.rosehulman.edu.Sounds.MySoundEffect;
 import com.rosehulman.edu.Sprites.Bullet.Bullet;
 import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
 import com.rosehulman.edu.Sprites.Weapon.HeroWeapons.HeroCommonWeapon;
@@ -37,10 +39,6 @@ public class Hero extends GameObject {
     private float stateTimer;
 
 
-
-
-
-
     public Hero(World world, PlayScreen playScreen, Rectangle bounds) {
         super(world, playScreen, bounds);
         this.setRegion(playScreen.getHeroAtlas().getRegions().first());
@@ -55,6 +53,7 @@ public class Hero extends GameObject {
     @Override
     public void onHit(Bullet bullet) {
 //        this.health -= bullet.getDamage();
+
     }
 
 

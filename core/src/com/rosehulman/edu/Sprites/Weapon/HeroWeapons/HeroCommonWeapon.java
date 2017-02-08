@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sounds.MySoundEffect;
 import com.rosehulman.edu.Sprites.Bullet.AbstractBullet;
 import com.rosehulman.edu.Sprites.Bullet.HeroBullets.SampleBullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
@@ -18,15 +19,19 @@ import com.rosehulman.edu.Sprites.Weapon.Abstract.SingleWeapon;
 
 public class HeroCommonWeapon extends SingleWeapon {
 
+    private MySoundEffect sound;
+    private boolean isMute = false;
+
     public HeroCommonWeapon(Vector2 position, Vector2 direction, World world, TextureAtlas textureAtlas, GameObject owner, PlayScreen sc) {
         super(position, direction, world, textureAtlas, owner, sc);
         this.direction = new Vector2(0, 20);
+        this.sound = new MySoundEffect("sounds/shrink.wav", isMute);
     }
 
     @Override
     public float setFireInterval()
     {
-        return 0.06f;
+        return 0.2f;
     }
 
     @Override
@@ -56,6 +61,7 @@ public class HeroCommonWeapon extends SingleWeapon {
         sc.addBullet(bullet);
         sc.addBullet(bulletLeft);
         sc.addBullet(bulletRight);
+        this.sound.playSound();
     }
 
     @Override

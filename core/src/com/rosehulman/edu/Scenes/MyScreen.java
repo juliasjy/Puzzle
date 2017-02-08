@@ -20,7 +20,6 @@ import com.rosehulman.edu.Utils.Utils;
  */
 
 public class MyScreen implements Screen {
-    public Music backgroundMusic;
     public Stage stage;
 
     //game related
@@ -83,13 +82,6 @@ public class MyScreen implements Screen {
     public void createActors(Stage stage){
 
     };
-
-    public void createMusic(String music){
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(music));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0.1f);
-        backgroundMusic.play();
-    }
 
     public Actor createActorForButton(Texture texture, Vector2 position, float width, float height, ClickListener listener) {
         MyActor actor = new MyActor(texture, position, width, height);

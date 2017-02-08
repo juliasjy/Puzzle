@@ -3,7 +3,6 @@ package com.rosehulman.edu.Scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.rosehulman.edu.Sounds.MyMusic;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Sprites.Animation.AbstractAnimationSprite;
 import com.rosehulman.edu.Sprites.Bullet.AbstractBullet;
@@ -26,10 +26,8 @@ import com.rosehulman.edu.Tools.B2WorldCreator;
 import com.rosehulman.edu.Tools.PuzzleContactListener;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.Utils;
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -78,8 +76,8 @@ public class PlayScreen implements Screen, InputProcessor {
     private Hero hero;
     private int level = 1;
 
-    public Music backgroundMusic;
-
+    public MyMusic music;
+    private boolean isMute = false;
 
     private float time = 0;
     private boolean isPaused;
@@ -139,7 +137,7 @@ public class PlayScreen implements Screen, InputProcessor {
         bufferX = this.gamePort.getWorldWidth() / 3;
         bufferY = this.gamePort.getWorldHeight() / 5;
 
-        createMusic("music/level" + level + ".wav");
+        this.music = new MyMusic("music/level" + level + ".wav", this.isMute);
 
         Gdx.input.setInputProcessor(this);
 
@@ -148,7 +146,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
-
+        music.startMusic();
     }
 
     @Override
@@ -181,19 +179,19 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public void resize(int width, int height)
-    {
+    public void resize(int width, int height) {
         gamePort.update(width, height);
     }
 
     @Override
     public void pause() {
+        this.music.pauseMusic();
 
     }
 
     @Override
     public void resume() {
-
+        this.music.contiuneMusic();
     }
 
     @Override
@@ -203,7 +201,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        this.backgroundMusic.dispose();
+        this.music.disposeMusic();
     }
 
 
@@ -436,12 +434,5 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public boolean isBeyondRightBoundary(Vector2 position) {
         return position.x  > this.gamePort.getWorldWidth() + bufferX;
-    }
-
-    public void createMusic(String music){
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(music));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0.1f);
-        backgroundMusic.play();
     }
 }
