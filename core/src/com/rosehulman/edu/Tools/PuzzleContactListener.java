@@ -22,8 +22,9 @@ public class PuzzleContactListener implements ContactListener {
         Object dataA  = fixA.getUserData();
         Object dataB = fixB.getUserData();
 
-
+        //If A is a bullet
         if (dataA != null && Bullet.class.isAssignableFrom(dataA.getClass())) {
+            //If B is a gameObject
             if (dataB != null && GameObject.class.isAssignableFrom(dataB.getClass())) {
                 Bullet bullet = (Bullet) dataA;
                 GameObject object = (GameObject) dataB;
@@ -33,8 +34,9 @@ public class PuzzleContactListener implements ContactListener {
             }
         }
 
-
+        //If B is bullet
         else if (dataB != null && Bullet.class.isAssignableFrom(dataB.getClass())) {
+            //If A is gameObject
             if (dataA != null && GameObject.class.isAssignableFrom(dataA.getClass())) {
                 Bullet bullet = (Bullet) dataB;
                 GameObject object = (GameObject) dataA;

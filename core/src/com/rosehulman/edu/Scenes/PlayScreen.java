@@ -3,6 +3,7 @@ package com.rosehulman.edu.Scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -67,6 +68,10 @@ public class PlayScreen implements Screen, InputProcessor {
     private B2WorldCreator b2wc;
 
     private Hero hero;
+    private int level = 1;
+
+    public Music backgroundMusic;
+
 
     private float time = 0;
     private boolean isPaused;
@@ -114,6 +119,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
         bufferX = this.gamePort.getWorldWidth() / 3;
         bufferY = this.gamePort.getWorldHeight() / 5;
+
+        createMusic("music/level" + level + ".wav");
 
         Gdx.input.setInputProcessor(this);
 
@@ -177,7 +184,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        this.backgroundMusic.dispose();
     }
 
 
@@ -393,5 +400,10 @@ public class PlayScreen implements Screen, InputProcessor {
         return position.x  > this.gamePort.getWorldWidth() + bufferX;
     }
 
-
+    public void createMusic(String music){
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(music));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.1f);
+        backgroundMusic.play();
+    }
 }

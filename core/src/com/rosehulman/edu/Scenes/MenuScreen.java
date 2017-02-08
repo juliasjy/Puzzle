@@ -46,7 +46,7 @@ public class MenuScreen extends MyScreen{
         this.level_button = new Texture("button_level.png");
         this.background = new Texture("background.jpg");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
-        createMusic("music/level1.wav");
+        createMusic("music/level2.wav");
         createStage();
     }
 
