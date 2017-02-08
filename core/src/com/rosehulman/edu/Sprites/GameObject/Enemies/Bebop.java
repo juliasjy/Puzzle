@@ -30,7 +30,7 @@ public class Bebop extends Enemy {
 
     public Bebop(World world, PlayScreen playScreen, Rectangle bounds) {
         super(world, playScreen, bounds);
-        this.collisionDamage = 10;
+        this.collisionDamage = 150;
         this.health = 400;
         this.setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(68),  Utils.scaleWithPPM(68));
 
@@ -119,6 +119,7 @@ public class Bebop extends Enemy {
     @Override
     public void onSetToInactiveState() {
         this.body.setActive(false);
+        this.body.setLinearVelocity(0, 0);
         System.out.println("Enemy set to inactive state");
     }
 
@@ -126,6 +127,7 @@ public class Bebop extends Enemy {
     public void onSetToActiveState() {
         System.out.println("Enemy set to active state");
         this.body.setActive(true);
+        this.body.setLinearVelocity(0, -0.5f);
     }
 
 

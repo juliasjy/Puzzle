@@ -32,7 +32,6 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
 
     public GameObject(World world, PlayScreen playScreen, Rectangle bounds) {
 //        this.objectState = Constants.GameObjectState.ACTIVE;
-
         this.world = world;
         this.playScreen = playScreen;
         this.body = createPhysicsBody(bounds);
@@ -106,7 +105,6 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
         }
         //set sprite position corresponding to location of physics body
         setPosition(this.body.getPosition().x - getWidth() / 2.0f, this.body.getPosition().y - getHeight() / 2.0f);
-
         if (this.objectState == Constants.GameObjectState.INACTIVE) {
             if (!playScreen.isBeyondTopBoundary(this.body.getPosition())) {
                 this.setState(Constants.GameObjectState.ACTIVE);
@@ -114,7 +112,6 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
                 return;
             }
         }
-
         this.healthBar.update(dt);
         if (this.weapon != null) {
             this.weapon.update(dt);

@@ -46,7 +46,7 @@ public class Hero extends GameObject {
         this.setRegion(playScreen.getHeroAtlas().getRegions().first());
         this.currentState = State.DOWN;
         this.stateTimer = 0;
-        this.collisionDamage = 10;
+        this.collisionDamage = 99999;
         this.health = 500;
         setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(32), Utils.scaleWithPPM(32));
         configureAnimation();
@@ -54,12 +54,14 @@ public class Hero extends GameObject {
 
     @Override
     public void onHit(Bullet bullet) {
-        this.health -= bullet.getDamage();
+//        this.health -= bullet.getDamage();
     }
 
+
     @Override
-    public void onHit(GameObject object) {
-        this.health -= object.getCollisionDamage();
+    public void onHit(GameObject object)
+    {
+//        this.health -= object.getCollisionDamage();
     }
 
     @Override

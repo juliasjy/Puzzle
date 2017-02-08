@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -24,6 +25,7 @@ import com.rosehulman.edu.Tools.B2WorldCreator;
 import com.rosehulman.edu.Tools.PuzzleContactListener;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.Utils;
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,6 +57,12 @@ public class PlayScreen implements Screen, InputProcessor {
     private float step = 1/60f;
     private float lastX = 0;
     private float lastY = 0;
+    private float speedScale = 1;
+    private float mapTotalHeight;
+    private float mapTotalWidth;
+
+    private Constants.GamePhase gamePhase;
+
     private ContactListener contactListener;
 
     public static TextureAtlas heroAtlas;
@@ -74,10 +82,21 @@ public class PlayScreen implements Screen, InputProcessor {
     public PlayScreen(Puzzle game) {
         this.mapLoader = new TmxMapLoader();
         this.map = mapLoader.load("tiledMap/Fly.tmx");
+
+        MapProperties properties = map.getProperties();
+        int width = properties.get("width", Integer.class);
+        int height = properties.get("height", Integer.class);
+        int tilePixelWidth = properties.get("tilewidth", Integer.class);
+        int tilePixelHeight = properties.get("tileheight", Integer.class);
+        int mapPixelWidth = width * tilePixelWidth;
+        int mapPixelHeight = height * tilePixelHeight;
+        mapTotalHeight = Utils.scaleWithPPM(mapPixelHeight);
+        mapTotalWidth = Utils.scaleWithPPM(mapPixelWidth);
+
         this.isPaused = false;
         this.time = 0;
 
-
+        this.gamePhase = Constants.GamePhase.NORMAL;
 
         bulletList = Collections.synchronizedList(new ArrayList<AbstractBullet>());
         enemyList = Collections.synchronizedList(new ArrayList<Enemy>());
@@ -181,27 +200,39 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
 
-    public void handleInput(float dt)
-    {
-//        this.hero.handleInput(dt);
-    }
+    public void handleInput(float dt) {}
 
 
     public void update(float dt) {
-        if (this.isPaused) {
+        dt = dt * speedScale;
+        if (this.gamePhase == Constants.GamePhase.PAUSED) {
             return;
         }
+
+        if (this.gamePhase == Constants.GamePhase.BOSS_FIGHT) {
+
+        } else if (this.gamePhase == Constants.GamePhase.NORMAL) {
+            gameCam.position.y += dt;
+            System.out.println(topY());
+            System.out.println(mapTotalHeight);
+            //important
+            this.lastY += dt;
+            gameCam.update();
+
+            if (this.topY() >= mapTotalHeight) {
+                System.out.println("SET TO BOSS FIGHT PHASE");
+                this.gamePhase = Constants.GamePhase.BOSS_FIGHT;
+                this.hero.body.setLinearVelocity(0, 0);
+            }
+        }
+
 
         this.time += dt;
         this.handleInput(dt);
 
         world.step(dt, 6, 2);
 
-        gameCam.position.y += dt;
 
-        //important
-        this.lastY += dt;
-        gameCam.update();
 
 
         hero.update(dt);
@@ -289,7 +320,7 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
     public void onHeroDie() {
-//        game.setScreen(new MenuScreen(game, null));
+        game.setScreen(new MenuScreen(game, null));
     }
 
     @Override
@@ -343,7 +374,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-
 //        this.hero.body.setLinearVelocity(screenX, screenY);
         return true;
     }
@@ -360,6 +390,14 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public float bottomY() {
         return this.gameCam.position.y - this.gamePort.getWorldHeight() / 2;
+    }
+
+    public Constants.GamePhase getGamePhase() {
+        return this.gamePhase;
+    }
+
+    public void setGamePhase(Constants.GamePhase phase) {
+        this.gamePhase = phase;
     }
 
 

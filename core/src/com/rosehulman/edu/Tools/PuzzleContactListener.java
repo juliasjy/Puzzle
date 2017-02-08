@@ -30,6 +30,7 @@ public class PuzzleContactListener implements ContactListener {
                 bullet.onHit(object);
                 object.onHit(bullet);
             } else {
+
             }
         }
 
