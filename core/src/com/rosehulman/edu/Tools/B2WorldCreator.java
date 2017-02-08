@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosehulman.edu.Interface.InputHandler;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sprites.GameObject.Bosses.BOSS1;
 import com.rosehulman.edu.Sprites.GameObject.Enemies.Bebop;
 import com.rosehulman.edu.Sprites.GameObject.Enemies.Enemy;
 import com.rosehulman.edu.Sprites.GameObject.Enemies.SampleEnemy;
@@ -33,7 +34,7 @@ public class B2WorldCreator {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        Enemy enemy;
+        Enemy enemy = null;
         for (MapObject object:  map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rec = ((RectangleMapObject) object).getRectangle();
             Integer type = (Integer) object.getProperties().get("type");
@@ -41,16 +42,21 @@ public class B2WorldCreator {
             switch (type) {
                 case 0:
                     enemy = new Bebop(world, sc, rec);
-                    sc.addEnemy(enemy);
+
                     break;
                 case 1:
                     enemy = new SampleEnemy(world, sc, rec);
-                    sc.addEnemy(enemy);
+
+                    break;
+                case 2:
+                    enemy = new BOSS1(world, sc, rec);
                     break;
 
-
             }
-
+            if (enemy != null) {
+                sc.addEnemy(enemy);
+                enemy = null;
+            }
         }
 //
 //        //bricks

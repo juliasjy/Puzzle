@@ -14,5 +14,6 @@ public class Constants {
     public static final short OBSTACLE_BIT = 32;
 
     public enum GameObjectState {INACTIVE, ACTIVE, DEAD, CLEANING_PHYSICS_BODY, REMOVABLE}
+    public enum GamePhase {NORMAL, PAUSED, BOSS_FIGHT, GAME_OVER}
 }
 

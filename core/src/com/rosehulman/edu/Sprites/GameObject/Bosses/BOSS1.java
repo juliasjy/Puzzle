@@ -1,4 +1,4 @@
-package com.rosehulman.edu.Sprites.GameObject.Enemies;
+package com.rosehulman.edu.Sprites.GameObject.Bosses;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,35 +13,37 @@ import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Scenes.PlayScreen;
 import com.rosehulman.edu.Sprites.Animation.BulletExplosion;
 import com.rosehulman.edu.Sprites.Bullet.Bullet;
+import com.rosehulman.edu.Sprites.GameObject.Enemies.Enemy;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
 import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
+import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.BossWeapon;
 import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.EnemyWeaponLinear;
-import com.rosehulman.edu.Sprites.Weapon.HeroWeapons.HeroCommonWeapon;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.SpriteUtils;
 import com.rosehulman.edu.Utils.Utils;
+import com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT;
 
 /**
  * Created by mot on 2/1/17.
  */
 
-public class SampleEnemy extends Enemy {
+public class BOSS1 extends Enemy {
 
-    public SampleEnemy(World world, PlayScreen playScreen, Rectangle bounds) {
+    public BOSS1(World world, PlayScreen playScreen, Rectangle bounds) {
         super(world, playScreen, bounds);
-        this.collisionDamage = 100;
-        this.health = 400;
-        this.setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(96),  Utils.scaleWithPPM(96));
-
+        this.collisionDamage = 9999;
+        this.health = 10000;
+        this.maxHealth = 10000;
+        this.setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(bounds.getWidth()),  Utils.scaleWithPPM(bounds.getHeight()));
     }
 
     @Override
     public Animation configureAnimation() {
-        int shipHeight = 350;
-        int shipWidth = 225;
+        int shipHeight = 250;
+        int shipWidth = 180;
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 1; i++) {
-            frames.add(new TextureRegion(getTexture(), 370 , 494, shipWidth, shipHeight));
+            frames.add(new TextureRegion(getTexture(), 0, 500, shipWidth, shipHeight));
         }
         return new Animation(0.1f, frames);
     }
@@ -68,6 +70,8 @@ public class SampleEnemy extends Enemy {
 
 
 
+
+
     @Override
     protected Body createPhysicsBody(Rectangle bounds) {
         BodyDef bdef = new BodyDef();
@@ -89,16 +93,15 @@ public class SampleEnemy extends Enemy {
         fdef.shape = shape;
 
 
-//        fdef.isSensor = true;
+
         body.createFixture(fdef);
-//        body.setLinearVelocity(0, -1);
         return body;
     }
 
     @Override
     protected Weapon configureWeapon() {
-        return new EnemyWeaponLinear(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
 //        return null;
+        return new BossWeapon(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
     }
 
 
@@ -114,11 +117,9 @@ public class SampleEnemy extends Enemy {
         this.stateTimer += dt * 2;
     }
 
-
     @Override
     public void onSetToInactiveState() {
         this.body.setActive(false);
-        this.body.setLinearVelocity(0, 0);
         System.out.println("Enemy set to inactive state");
     }
 
@@ -126,8 +127,8 @@ public class SampleEnemy extends Enemy {
     public void onSetToActiveState() {
         System.out.println("Enemy set to active state");
         this.body.setActive(true);
-        this.body.setLinearVelocity(0, -0.5f);
     }
+
 
     @Override
     public void onSetToDeadState()
@@ -139,10 +140,12 @@ public class SampleEnemy extends Enemy {
 
     @Override
     public void onSetToRemovableState() {
-
     }
 
     @Override
     public void onSetToCleaningPhysicsBodyState() {
+//        disposePhysicsBody();
     }
+
+
 }
