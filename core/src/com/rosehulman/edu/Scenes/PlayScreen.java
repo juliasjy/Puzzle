@@ -77,12 +77,12 @@ public class PlayScreen implements Screen, InputProcessor {
     private int level = 1;
 
     public MyMusic music;
-    private boolean isMute = false;
+    private boolean isMute;
 
     private float time = 0;
     private boolean isPaused;
 
-    public PlayScreen(Puzzle game) {
+    public PlayScreen(Puzzle game, boolean isMute) {
         this.mapLoader = new TmxMapLoader();
         this.map = mapLoader.load("tiledMap/Fly.tmx");
 
@@ -137,6 +137,7 @@ public class PlayScreen implements Screen, InputProcessor {
         bufferX = this.gamePort.getWorldWidth() / 3;
         bufferY = this.gamePort.getWorldHeight() / 5;
 
+        this.isMute = isMute;
         this.music = new MyMusic("music/level" + level + ".wav", this.isMute);
 
         Gdx.input.setInputProcessor(this);

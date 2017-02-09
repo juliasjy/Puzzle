@@ -29,6 +29,7 @@ public class MyScreen implements Screen {
 
     //parent screen
     public MyScreen parentScreen;
+    public boolean isMute;
 
     public MyScreen(Puzzle game, MyScreen parent){
         this.game = game;
@@ -88,5 +89,10 @@ public class MyScreen implements Screen {
         actor.setTouchable(Touchable.enabled);
         actor.addListener(listener);
         return actor;
+    }
+
+    public void setMute(boolean mute) {
+        this.isMute = mute;
+        Gdx.app.log("Set", "mute" + mute);
     }
 }

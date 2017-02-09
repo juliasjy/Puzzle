@@ -9,13 +9,12 @@ import com.badlogic.gdx.audio.Sound;
 
 public class MySoundEffect {
     private Sound mySound;
-    private boolean isMute;
+    private static boolean isMute;
 
-    public MySoundEffect(String sound, boolean isMute){
+    public MySoundEffect(String sound){
         if(!isMute) {
             this.mySound = Gdx.audio.newSound(Gdx.files.internal(sound));
         }
-        this.isMute = isMute;
     }
 
     public void playSound(){
@@ -30,6 +29,10 @@ public class MySoundEffect {
         if(!isMute) {
             this.mySound.dispose();
         }
+    }
+
+    public static void setMute(boolean b){
+        isMute = b;
     }
 
 }

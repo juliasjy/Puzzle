@@ -29,7 +29,6 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
     public World world;
 
     public MySoundEffect sound;
-    public boolean isMute = false;
 
 
     public AbstractBullet(Vector2 position, Vector2 direction, Animation animation, PlayScreen sc) {
@@ -45,7 +44,7 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
         this.damage = configureDamage();
         this.setRegion(this.getNextFrame(0));
         this.setAngle();
-        this.sound = new MySoundEffect("sounds/bomb.wav", isMute);
+        this.sound = new MySoundEffect("sounds/bomb.wav");
     }
 
 
@@ -126,6 +125,7 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
         world.destroyBody(body);
         body.setUserData(null);
         body = null;
+        sound.dispose();
     }
 
 
