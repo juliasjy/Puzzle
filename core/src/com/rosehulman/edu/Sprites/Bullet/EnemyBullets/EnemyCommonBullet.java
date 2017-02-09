@@ -94,7 +94,7 @@ public class EnemyCommonBullet extends AbstractBullet {
 
     @Override
     public void onSetToDeadState() {
-        BulletExplosion be = new BulletExplosion(0.2f, this.getBoundingRectangle());
+        BulletExplosion be = new BulletExplosion(0.3f, this.getBoundingRectangle());
         this.sc.addAnimationSprite(be);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
     }

@@ -28,7 +28,7 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
     protected float collisionDamage;
     protected PlayScreen playScreen;
     protected Constants.GameObjectState objectState;
-
+    protected float tintTimer;
 
     public GameObject(World world, PlayScreen playScreen, Rectangle bounds) {
 //        this.objectState = Constants.GameObjectState.ACTIVE;
@@ -36,9 +36,10 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
         this.playScreen = playScreen;
         this.body = createPhysicsBody(bounds);
         this.body.getFixtureList().first().setUserData(this);
-        this.health = 500;
-        this.maxHealth = 500;
+        this.health = 200;
+        this.maxHealth = 200;
         this.collisionDamage = 20;
+        this.tintTimer = 0;
         this.healthBar = new HealthBar(this);
         this.weapon = configureWeapon();
         this.setState(Constants.GameObjectState.INACTIVE);
@@ -103,7 +104,7 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
             this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
             return;
         }
-        //set sprite position corresponding to location of physics body
+        //set sprite relativePosition corresponding to location of physics body
         setPosition(this.body.getPosition().x - getWidth() / 2.0f, this.body.getPosition().y - getHeight() / 2.0f);
         if (this.objectState == Constants.GameObjectState.INACTIVE) {
             if (!playScreen.isBeyondTopBoundary(this.body.getPosition())) {
@@ -112,6 +113,8 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
                 return;
             }
         }
+
+//        this.setColor(1,1,1,1);
         this.healthBar.update(dt);
         if (this.weapon != null) {
             this.weapon.update(dt);

@@ -1,4 +1,4 @@
-package com.rosehulman.edu.Sprites.Weapon.EnemyWeapons;
+package com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.SingleWeapon;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -10,17 +10,16 @@ import com.rosehulman.edu.Scenes.PlayScreen;
 import com.rosehulman.edu.Sprites.Bullet.AbstractBullet;
 import com.rosehulman.edu.Sprites.Bullet.EnemyBullets.EnemyCommonBullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
-import com.rosehulman.edu.Sprites.GameObject.Hero;
 import com.rosehulman.edu.Sprites.Weapon.Abstract.SingleWeapon;
 
 /**
  * Created by mot on 2/1/17.
  */
 
-public class BossWeapon extends SingleWeapon {
+public class EnemyWeaponLinear extends SingleWeapon {
 
-    public BossWeapon(Vector2 position, Vector2 direction, World world, TextureAtlas textureAtlas, GameObject owner, PlayScreen sc) {
-        super(position, direction, world, textureAtlas, owner, sc);
+    public EnemyWeaponLinear(Vector2 position, Vector2 direction, World world, GameObject owner, PlayScreen sc) {
+        super(position, direction, world, owner, sc);
     }
 
     @Override
@@ -43,26 +42,27 @@ public class BossWeapon extends SingleWeapon {
 
     @Override
     public void updateDirection() {
-        Hero hero = sc.getHero();
-        Vector2 heroPos = hero.body.getPosition();
-        Vector2 myPos = this.owner.body.getPosition();
-
-        Vector2 direction = new Vector2(heroPos.x - myPos.x, heroPos.y - myPos.y);
-        direction.nor();
-        this.direction = new Vector2(direction.x * this.bulletSpeed, direction.y * this.bulletSpeed);
+//        Hero hero = sc.getHero();
+//        Vector2 heroPos = hero.body.getPosition();
+//        Vector2 myPos = this.owner.body.getPosition();
+//
+//        Vector2 direction = new Vector2(heroPos.x - myPos.x, heroPos.y - myPos.y);
+//        direction.nor();
+//        this.direction = new Vector2(direction.x * this.bulletSpeed, direction.y * this.bulletSpeed);
     }
 
 
     @Override
-    public void fire() {
-        Vector2 pos;
-        AbstractBullet bullet;
-        for (int i = -5; i <= 5; i ++) {
-            pos = new Vector2(this.position.x + i * 0.3f, this.position.y );
-            bullet = EnemyCommonBullet.getInstance(pos, direction, bulletAnimation, sc);
+    public void fire(float dt) {
+        super.fire(dt);
+        this.fireCounter += dt;
+        if (this.fireCounter > this.fireInterval) {
+            Vector2 pos = new Vector2(this.owner.body.getPosition().x , this.owner.body.getPosition().y );
+            pos.add(this.relativePosition);
+            AbstractBullet bullet = EnemyCommonBullet.getInstance(pos, direction, bulletAnimation, sc);
             sc.addBullet(bullet);
+            fireCounter -= fireInterval;
         }
-
     }
 
     @Override

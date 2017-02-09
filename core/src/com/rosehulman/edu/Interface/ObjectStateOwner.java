@@ -7,7 +7,6 @@ import com.rosehulman.edu.Utils.Constants;
  */
 
 public interface ObjectStateOwner extends Temporal {
-
     void setState(Constants.GameObjectState state);
     Constants.GameObjectState getState();
     void onSetToInactiveState();

@@ -66,7 +66,7 @@ public class commonWeapon extends Sprite {
 //        FixtureDef fdef = new FixtureDef();
 //        PolygonShape shape = new PolygonShape();
 //        Vector2 pos = SpriteUtils.getPosFromBounds(bounds);
-//        bdef.position.set(pos);
+//        bdef.relativePosition.set(pos);
 //        bdef.type = BodyDef.BodyType.DynamicBody;
 //
 //        body = world.createBody(bdef);

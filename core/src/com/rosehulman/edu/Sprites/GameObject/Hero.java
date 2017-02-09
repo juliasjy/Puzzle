@@ -48,20 +48,21 @@ public class Hero extends GameObject {
         this.stateTimer = 0;
         this.collisionDamage = 99999;
         this.health = 500;
-        setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(32), Utils.scaleWithPPM(32));
-        configureAnimation();
+        this.maxHealth = 500;
+        setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(96), Utils.scaleWithPPM(96));
+//        configureAnimation();
     }
 
     @Override
     public void onHit(Bullet bullet) {
-//        this.health -= bullet.getDamage();
+        this.health -= bullet.getDamage();
     }
 
 
     @Override
     public void onHit(GameObject object)
     {
-//        this.health -= object.getCollisionDamage();
+        this.health -= object.getCollisionDamage();
     }
 
     @Override
@@ -79,7 +80,7 @@ public class Hero extends GameObject {
 
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(12 / Puzzle.PPM);
+        shape.setRadius(25 / Puzzle.PPM);
         fdef.shape = shape;
         body.createFixture(fdef);
 
@@ -90,7 +91,7 @@ public class Hero extends GameObject {
 
     @Override
     protected Weapon configureWeapon() {
-        return new HeroCommonWeapon(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
+        return new HeroCommonWeapon(this.body.getPosition(), new Vector2(0, 1), world , this, playScreen);
     }
 
 
@@ -146,31 +147,31 @@ public class Hero extends GameObject {
         }
     }
 
-    public void configureAnimation() {
-        int heroHeight = 95;
-        int heroWidth = 65;
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 5, heroWidth, heroHeight ));
-        }
-        this.animation_down = new Animation(0.1f, frames);
-        frames.clear();
-
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 100, heroWidth, heroHeight ));
-        }
-        this.animation_up = new Animation(0.1f, frames);
-        frames.clear();
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 195, heroWidth, heroHeight ));
-        }
-        this.animation_left = new Animation(0.1f, frames);
-        frames.clear();
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 290, heroWidth, heroHeight ));
-        }
-        this.animation_right = new Animation(0.1f, frames);
-    }
+//    public void configureAnimation() {
+//        int heroHeight = 95;
+//        int heroWidth = 65;
+//        Array<TextureRegion> frames = new Array<TextureRegion>();
+//        for (int i = 0; i < 4; i++) {
+//            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 5, heroWidth, heroHeight ));
+//        }
+//        this.animation_down = new Animation(0.1f, frames);
+//        frames.clear();
+//
+//        for (int i = 0; i < 4; i++) {
+//            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 100, heroWidth, heroHeight ));
+//        }
+//        this.animation_up = new Animation(0.1f, frames);
+//        frames.clear();
+//        for (int i = 0; i < 4; i++) {
+//            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 195, heroWidth, heroHeight ));
+//        }
+//        this.animation_left = new Animation(0.1f, frames);
+//        frames.clear();
+//        for (int i = 0; i < 4; i++) {
+//            frames.add(new TextureRegion(getTexture(), 5 + i * 62, 290, heroWidth, heroHeight ));
+//        }
+//        this.animation_right = new Animation(0.1f, frames);
+//    }
 
 
 
@@ -179,7 +180,7 @@ public class Hero extends GameObject {
     public void update(float dt) {
         super.update(dt);
         this.stateTimer += dt;
-        this.setRegion(this.getNextFrame(dt));
+//        this.setRegion(this.getNextFrame(dt));
 
 
         if (this.health <= 0) {

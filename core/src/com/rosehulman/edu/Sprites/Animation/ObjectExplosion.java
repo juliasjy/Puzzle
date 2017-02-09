@@ -10,12 +10,13 @@ import com.rosehulman.edu.Scenes.PlayScreen;
  * Created by mot on 2/4/17.
  */
 
-public class BulletExplosion extends AbstractAnimationSprite {
+public class ObjectExplosion extends AbstractAnimationSprite {
     private float xScale = 1.5f;
-    private float yScale = 1f;
+    private float yScale = 1.5f;
 
 
-    public BulletExplosion(float duration, Rectangle bounds) {
+    public ObjectExplosion(float duration, Rectangle bounds)
+    {
         super(duration, bounds);
         float shiftX = (xScale - 1) * bounds.width / 2;
         float shiftY = (yScale - 1) * bounds.height / 2;
@@ -24,9 +25,9 @@ public class BulletExplosion extends AbstractAnimationSprite {
 
     @Override
     protected Animation configureAnimation() {
-        this.setRegion(PlayScreen.bulletExplosionAtlas.getRegions().first());
-        int height = 128;
-        int width = 128;
+        this.setRegion(PlayScreen.explosionAtlas.getRegions().first());
+        int height = 64;
+        int width = 64;
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 4; i++) {
             for (int j =0; j < 4; j++) {

@@ -1,0 +1,12 @@
+bulletExplosion2.png
+size: 939, 902
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+light
+  rotate: false
+  xy: 1, 1
+  size: 937, 900
+  orig: 960, 960
+  offset: 1, 52
+  index: 4

@@ -1,6 +1,7 @@
 package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -26,10 +27,8 @@ import com.rosehulman.edu.Tools.B2WorldCreator;
 import com.rosehulman.edu.Tools.PuzzleContactListener;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.Utils;
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -70,6 +69,7 @@ public class PlayScreen implements Screen, InputProcessor {
     public static  TextureAtlas bulletsAtlas;
     public static  TextureAtlas enemyAtlas;
     public static TextureAtlas explosionAtlas;
+    public static TextureAtlas bulletExplosionAtlas;
     //box2d related
     public World world;
     private Box2DDebugRenderer b2dr;
@@ -107,11 +107,11 @@ public class PlayScreen implements Screen, InputProcessor {
         enemyList = Collections.synchronizedList(new ArrayList<Enemy>());
         animationList = Collections.synchronizedList(new ArrayList<AbstractAnimationSprite>());
 
-        this.heroAtlas = new TextureAtlas("SpriteSheet/HeroSheet.txt");
+        this.heroAtlas = new TextureAtlas("SpriteSheet/hero.txt");
         this.bulletsAtlas = new TextureAtlas("SpriteSheet/bullets.txt");
         this.enemyAtlas = new TextureAtlas("SpriteSheet/SpaceShips.txt");
         this.explosionAtlas = new TextureAtlas("SpriteSheet/explosions.txt");
-
+        this.bulletExplosionAtlas = new TextureAtlas("SpriteSheet/bulletExplosions.txt");
         this.renderer = new OrthogonalTiledMapRenderer(map, 1.0f / this.game.PPM);
 
         this.game = game;
@@ -158,7 +158,7 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
-        b2dr.render(world, this.gameCam.combined);
+//        b2dr.render(world, this.gameCam.combined);
 
         game.getBatch().setProjectionMatrix(gameCam.combined);
         this.game.getBatch().begin();
@@ -207,10 +207,19 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
 
-    public void handleInput(float dt) {}
+    public void handleInput(float dt) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if (this.gamePhase == Constants.GamePhase.NORMAL) {
+                this.gamePhase = Constants.GamePhase.PAUSED;
+            } else {
+                this.gamePhase = Constants.GamePhase.NORMAL;
+            }
+        }
+    }
 
 
     public void update(float dt) {
+        handleInput(dt);
         dt = dt * speedScale;
         if (this.gamePhase == Constants.GamePhase.PAUSED) {
             return;
@@ -235,7 +244,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
         this.time += dt;
-        this.handleInput(dt);
+//        this.handleInput(dt);
 
         world.step(dt, 6, 2);
 
