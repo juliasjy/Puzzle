@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sounds.MySoundEffect;
 import com.rosehulman.edu.Sprites.Animation.BulletExplosion;
 import com.rosehulman.edu.Sprites.Bullet.AbstractBullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
@@ -26,6 +27,7 @@ public class SampleBullet extends AbstractBullet {
         super(position, direction, animation, sc);
         setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(32), Utils.scaleWithPPM(96));
         setOrigin(this.getWidth() / 2, this.getHeight() / 2);
+        this.sound = new MySoundEffect("sounds/bomb.wav");
     }
 
 
@@ -103,7 +105,16 @@ public class SampleBullet extends AbstractBullet {
     public void onSetToCleaningPhysicsBodyState() {
     }
 
+    @Override
+    public void onHit(GameObject enemy)
+    {
+        super.onHit(enemy);
+        this.sound.playSound();
+    }
 
-
-
+    @Override
+    protected void dispose(){
+        super.dispose();
+        sound.dispose();
+    }
 }

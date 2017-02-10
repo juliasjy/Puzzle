@@ -24,7 +24,7 @@ public class HeroCommonWeapon extends SingleWeapon {
     public HeroCommonWeapon(Vector2 position, Vector2 direction, World world, TextureAtlas textureAtlas, GameObject owner, PlayScreen sc) {
         super(position, direction, world, textureAtlas, owner, sc);
         this.direction = new Vector2(0, 20);
-        this.sound = new MySoundEffect("sounds/shrink.wav");
+        this.sound = new MySoundEffect("sounds/bossfire.wav");
     }
 
     @Override
