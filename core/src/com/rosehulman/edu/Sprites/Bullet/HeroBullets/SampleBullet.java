@@ -88,6 +88,7 @@ public class SampleBullet extends AbstractBullet {
         BulletExplosion be = new BulletExplosion(0.4f, this.getBoundingRectangle());
         this.sc.addAnimationSprite(be);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
+
     }
 
     @Override
