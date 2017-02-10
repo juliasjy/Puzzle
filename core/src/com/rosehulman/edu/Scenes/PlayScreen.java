@@ -150,7 +150,7 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public void show()
     {
-        music.startMusic();
+//        music.startMusic();
     }
 
     @Override
