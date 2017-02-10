@@ -1,0 +1,12 @@
+hero.png
+size: 133, 107
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+unity飞机射击游戏源码-播放机平面5_爱给网_2gei_com
+  rotate: false
+  xy: 1, 1
+  size: 131, 105
+  orig: 131, 105
+  offset: 0, 0
+  index: -1

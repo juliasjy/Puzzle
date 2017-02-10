@@ -11,15 +11,15 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Scenes.PlayScreen;
-import com.rosehulman.edu.Sprites.Animation.BulletExplosion;
+import com.rosehulman.edu.Sprites.Animation.ObjectExplosion;
 import com.rosehulman.edu.Sprites.Bullet.Bullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
 import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
-import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.EnemyWeaponLinear;
+import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.SingleWeapon.EnemyWeaponLinear;
+import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.SingleWeapon.EnemyWeaponTracking;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.SpriteUtils;
 import com.rosehulman.edu.Utils.Utils;
-import com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT;
 
 /**
  * Created by mot on 2/1/17.
@@ -31,8 +31,13 @@ public class Bebop extends Enemy {
     public Bebop(World world, PlayScreen playScreen, Rectangle bounds) {
         super(world, playScreen, bounds);
         this.collisionDamage = 150;
-        this.health = 400;
-        this.setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(68),  Utils.scaleWithPPM(68));
+        this.health = 250;
+        this.maxHealth = 250;
+
+        this.setBounds(this.body.getPosition().x,
+                this.body.getPosition().y,
+                Utils.scaleWithPPM(bounds.getWidth()) * xScale,
+                Utils.scaleWithPPM(bounds.getHeight()) * yScale);
 
     }
 
@@ -54,6 +59,8 @@ public class Bebop extends Enemy {
             return;
         }
         this.health -= bullet.getDamage();
+        this.setColor(1f,0f,0.0f,1f);
+        this.tintTimer = 0.02f;
         deathCheck();
     }
 
@@ -63,6 +70,7 @@ public class Bebop extends Enemy {
         if (objectState != Constants.GameObjectState.ACTIVE) {
             return;
         }
+
         this.health -= hero.getCollisionDamage();
         deathCheck();
     }
@@ -100,7 +108,7 @@ public class Bebop extends Enemy {
     @Override
     protected Weapon configureWeapon() {
 //        return null;
-        return new EnemyWeaponLinear(this.body.getPosition(), new Vector2(0, 1), world, playScreen.getBulletsAtlas(), this, playScreen);
+        return new EnemyWeaponTracking(new Vector2(0, 0), new Vector2(0, -5), world, this, playScreen);
     }
 
 
@@ -134,7 +142,7 @@ public class Bebop extends Enemy {
     @Override
     public void onSetToDeadState()
     {
-        BulletExplosion be = new BulletExplosion(1f, this.getBoundingRectangle());
+        ObjectExplosion be = new ObjectExplosion(1f, this.getBoundingRectangle());
         this.playScreen.addAnimationSprite(be);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
     }

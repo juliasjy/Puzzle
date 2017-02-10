@@ -44,7 +44,6 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
         this.damage = configureDamage();
         this.setRegion(this.getNextFrame(0));
         this.setAngle();
-//        this.sound = new MySoundEffect("sounds/bomb.wav");
     }
 
 
@@ -136,7 +135,7 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
             return;
         }
         this.setState(Constants.GameObjectState.DEAD);
-//        this.sound.playSound();
+
     }
 
     @Override

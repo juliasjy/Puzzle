@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.rosehulman.edu.Interface.ObjectStateOwner;
+import com.rosehulman.edu.Sounds.MySoundEffect;
 import com.rosehulman.edu.Utils.Constants;
 
 /**
@@ -17,6 +18,7 @@ public abstract class AbstractAnimationSprite extends Sprite implements ObjectSt
     protected float stateTimer;
     protected float duration;
     protected Rectangle bounds;
+    protected MySoundEffect sound;
 
     public AbstractAnimationSprite(float duration, Rectangle bounds) {
         this.duration = duration;
@@ -24,6 +26,8 @@ public abstract class AbstractAnimationSprite extends Sprite implements ObjectSt
         setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
         this.stateTimer = 0;
         this.animation = configureAnimation();
+//        this.sound = new MySoundEffect("sounds/bossfire.wav");
+//        this.sound.playSound();
     }
 
     protected abstract Animation configureAnimation();
@@ -69,6 +73,7 @@ public abstract class AbstractAnimationSprite extends Sprite implements ObjectSt
         this.setRegion(getNextFrame());
         if (this.duration <= 0) {
             this.setState(Constants.GameObjectState.REMOVABLE);
+//            this.sound.dispose();
         }
     }
 }

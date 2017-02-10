@@ -80,20 +80,17 @@ public class SampleBullet extends AbstractBullet {
     }
 
     @Override
-    public void onSetToInactiveState() {
-
-    }
+    public void onSetToInactiveState() {}
 
     @Override
-    public void onSetToActiveState() {
-
-    }
+    public void onSetToActiveState() {}
 
     @Override
     public void onSetToDeadState() {
-        BulletExplosion be = new BulletExplosion(0.2f, this.getBoundingRectangle());
+        BulletExplosion be = new BulletExplosion(0.4f, this.getBoundingRectangle());
         this.sc.addAnimationSprite(be);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
+
     }
 
     @Override

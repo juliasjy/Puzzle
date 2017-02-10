@@ -1,4 +1,4 @@
-package com.rosehulman.edu.Sprites.Weapon.EnemyWeapons;
+package com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.SingleWeapon;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,10 +17,10 @@ import com.rosehulman.edu.Sprites.Weapon.Abstract.SingleWeapon;
  * Created by mot on 2/1/17.
  */
 
-public class EnemyWeaponLinear extends SingleWeapon {
+public class Swipe extends SingleWeapon {
 
-    public EnemyWeaponLinear(Vector2 position, Vector2 direction, World world, TextureAtlas textureAtlas, GameObject owner, PlayScreen sc) {
-        super(position, direction, world, textureAtlas, owner, sc);
+    public Swipe(Vector2 position, Vector2 direction, World world, GameObject owner, PlayScreen sc) {
+        super(position, direction, world, owner, sc);
     }
 
     @Override
@@ -36,7 +36,6 @@ public class EnemyWeaponLinear extends SingleWeapon {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 8; i++) {
             frames.add(new TextureRegion(getTexture(), 0, 0, bulletWidth, bulletHeight));
-
         }
         return new Animation(0.1f, frames);
     }
@@ -54,10 +53,21 @@ public class EnemyWeaponLinear extends SingleWeapon {
 
 
     @Override
-    public void fire() {
-        Vector2 pos = new Vector2(this.position.x , this.position.y );
-        AbstractBullet bullet = EnemyCommonBullet.getInstance(pos, direction, bulletAnimation, sc);
-        sc.addBullet(bullet);
+    public void fire(float dt) {
+        super.fire(dt);
+        this.fireCounter += dt;
+        if (this.fireCounter > this.fireInterval) {
+            Vector2 pos;
+            AbstractBullet bullet;
+            for (int i = -5; i <= 5; i ++) {
+                pos = new Vector2(this.owner.body.getPosition().x , this.owner.body.getPosition().y );
+                pos.add(this.relativePosition);
+                pos.add(i * 0.3f, 0);
+                bullet = EnemyCommonBullet.getInstance(pos, direction, bulletAnimation, sc);
+                sc.addBullet(bullet);
+            }
+            fireCounter -= fireInterval;
+        }
     }
 
     @Override

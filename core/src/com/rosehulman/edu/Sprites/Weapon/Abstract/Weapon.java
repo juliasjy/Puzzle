@@ -7,5 +7,5 @@ import com.rosehulman.edu.Interface.Temporal;
  */
 
 public interface Weapon extends Temporal {
-    void fire();
+    void fire(float dt);
 }
