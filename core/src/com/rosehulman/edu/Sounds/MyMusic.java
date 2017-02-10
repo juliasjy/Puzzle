@@ -13,9 +13,8 @@ public class MyMusic {
     private boolean isMute;
 
     public MyMusic(String musicName, boolean isMute){
-        if(!isMute) {
-            this.myMusic = Gdx.audio.newMusic(Gdx.files.internal(musicName));
-        }
+
+        this.myMusic = Gdx.audio.newMusic(Gdx.files.internal(musicName));
         this.isMute = isMute;
     }
 

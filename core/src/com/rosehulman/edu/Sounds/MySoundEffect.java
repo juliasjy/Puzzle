@@ -12,9 +12,7 @@ public class MySoundEffect {
     private static boolean isMute;
 
     public MySoundEffect(String sound){
-        if(!isMute) {
-            this.mySound = Gdx.audio.newSound(Gdx.files.internal(sound));
-        }
+        this.mySound = Gdx.audio.newSound(Gdx.files.internal(sound));
     }
 
     public void playSound(){

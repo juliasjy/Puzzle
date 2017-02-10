@@ -61,7 +61,7 @@ public class SettingScreen extends MyScreen {
         stage.addActor(returnActor);
 
         Vector2 musicMuteButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 4,
-                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.2f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.3f  - this.BUTTON_HEIGHT_RATIO)) / 2);
         ClickListener musicMuteButtonListener = new ClickListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -92,7 +92,7 @@ public class SettingScreen extends MyScreen {
         stage.addActor(soundMuteActor);
 
         Vector2 musicunMuteButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) * 3) / 4,
-                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.2f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.3f  - this.BUTTON_HEIGHT_RATIO)) / 2);
         ClickListener musicunMuteButtonListener = new ClickListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
