@@ -78,14 +78,10 @@ public class SampleBullet extends AbstractBullet {
     }
 
     @Override
-    public void onSetToInactiveState() {
-
-    }
+    public void onSetToInactiveState() {}
 
     @Override
-    public void onSetToActiveState() {
-
-    }
+    public void onSetToActiveState() {}
 
     @Override
     public void onSetToDeadState() {

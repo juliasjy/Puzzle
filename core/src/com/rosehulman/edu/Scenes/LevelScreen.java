@@ -25,7 +25,7 @@ public class LevelScreen extends MyScreen {
 
     public LevelScreen(Puzzle game, MyScreen parent) {
         super(game, parent);
-        this.background = new Texture("background.jpg");
+        this.background = new Texture("level_background.jpg");
         this.return_button = new Texture("button_return.png");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
         createStage();

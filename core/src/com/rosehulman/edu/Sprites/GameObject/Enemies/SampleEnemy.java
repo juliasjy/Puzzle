@@ -30,8 +30,8 @@ public class SampleEnemy extends Enemy {
     public SampleEnemy(World world, PlayScreen playScreen, Rectangle bounds) {
         super(world, playScreen, bounds);
         this.collisionDamage = 100;
-        this.health = 200;
-        this.maxHealth = 200;
+        this.health = 300;
+        this.maxHealth = 300;
         this.setBounds(this.body.getPosition().x,
                 this.body.getPosition().y,
                 Utils.scaleWithPPM(bounds.getWidth()) * xScale,

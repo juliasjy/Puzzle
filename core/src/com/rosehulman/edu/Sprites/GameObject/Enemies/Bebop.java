@@ -31,8 +31,8 @@ public class Bebop extends Enemy {
     public Bebop(World world, PlayScreen playScreen, Rectangle bounds) {
         super(world, playScreen, bounds);
         this.collisionDamage = 150;
-        this.health = 150;
-        this.maxHealth = 150;
+        this.health = 250;
+        this.maxHealth = 250;
 
         this.setBounds(this.body.getPosition().x,
                 this.body.getPosition().y,

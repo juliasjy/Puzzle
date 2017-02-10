@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sounds.MySoundEffect;
 import com.rosehulman.edu.Sprites.Bullet.AbstractBullet;
 import com.rosehulman.edu.Sprites.Bullet.HeroBullets.SampleBullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
@@ -18,15 +19,19 @@ import com.rosehulman.edu.Sprites.Weapon.Abstract.SingleWeapon;
 
 public class HeroCommonWeapon extends SingleWeapon {
 
+    private MySoundEffect sound;
+
     public HeroCommonWeapon(Vector2 position, Vector2 direction, World world, GameObject owner, PlayScreen sc) {
         super(position, direction, world, owner, sc);
         this.direction = new Vector2(0, 30);
+        this.sound = new MySoundEffect("sounds/heroFire.ogg");
+        this.sound.setVolume(0.02f);
     }
 
     @Override
     public float setFireInterval()
     {
-        return 0.08f;
+        return 0.07f;
     }
 
     @Override
@@ -42,7 +47,6 @@ public class HeroCommonWeapon extends SingleWeapon {
     @Override
     public void updateDirection() {
     }
-
 
 
     @Override
@@ -64,6 +68,8 @@ public class HeroCommonWeapon extends SingleWeapon {
             sc.addBullet(bulletLeft);
             sc.addBullet(bulletRight);
             this.fireCounter -= fireInterval;
+            this.sound.playSound();
         }
+
     }
 }

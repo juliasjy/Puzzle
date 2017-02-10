@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosehulman.edu.Interface.ObjectStateOwner;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sounds.MySoundEffect;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
 import com.rosehulman.edu.Utils.Constants;
 
@@ -25,9 +26,9 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
     protected float stateTimer;
     protected float damage;
 
-
-
     public World world;
+
+    public MySoundEffect sound;
 
 
     public AbstractBullet(Vector2 position, Vector2 direction, Animation animation, PlayScreen sc) {
@@ -43,6 +44,7 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
         this.damage = configureDamage();
         this.setRegion(this.getNextFrame(0));
         this.setAngle();
+
     }
 
 
@@ -123,6 +125,7 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
         world.destroyBody(body);
         body.setUserData(null);
         body = null;
+//        sound.dispose();
     }
 
 
@@ -133,6 +136,8 @@ public abstract class AbstractBullet extends Sprite implements Bullet, ObjectSta
             return;
         }
         this.setState(Constants.GameObjectState.DEAD);
+//        System.out.println("play bullet sound");
+
     }
 
     @Override

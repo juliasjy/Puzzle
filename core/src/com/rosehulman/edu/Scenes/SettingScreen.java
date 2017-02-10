@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.rosehulman.edu.Puzzle;
+import com.rosehulman.edu.Sounds.MyMusic;
+import com.rosehulman.edu.Sounds.MySoundEffect;
 import com.rosehulman.edu.Utils.Utils;
 
 /**
@@ -19,18 +21,30 @@ import com.rosehulman.edu.Utils.Utils;
 public class SettingScreen extends MyScreen {
     private Texture background;
     private Texture return_button;
+    private Texture mute_button;
+    private Texture unmute_button;
+    private MyMusic music;
+    private MySoundEffect soundEffect = new MySoundEffect("sounds/die.wav");
+    private float BUTTON_WIDTH_RATIO = 0.25f;
+    private float BUTTON_HEIGHT_RATIO = 0.05f;
 
-    public SettingScreen(Puzzle game, MyScreen parent) {
+    public SettingScreen(Puzzle game, MyScreen parent, MyMusic music) {
         super(game, parent);
-        this.background = new Texture("background.jpg");
+        this.music = music;
+        this.background = new Texture("setting_background.jpg");
         this.return_button = new Texture("button_return.png");
+        this.mute_button = new Texture("button_mute.png");
+        this.unmute_button = new Texture("button_unmute.png");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
         createStage();
     }
 
+
     @Override
-    public void createActors(Stage stage){
+    public void createActors(final Stage stage){
         float side = (Utils.scaleWithPPM(this.game.V_WIDTH) * 0.1f);
+        float width = (Utils.scaleWithPPM(this.game.V_WIDTH) * BUTTON_WIDTH_RATIO);
+        float height = (Utils.scaleWithPPM(this.game.V_HEIGHT) * BUTTON_HEIGHT_RATIO);
         Vector2 returnButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (0.05f) ) / 2,
                 (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.05f)) / 2);
         ClickListener returnButtonListener = new ClickListener(){
@@ -45,6 +59,68 @@ public class SettingScreen extends MyScreen {
         };
         Actor returnActor = createActorForButton(this.return_button, returnButtonPosition, side, side, returnButtonListener);
         stage.addActor(returnActor);
+
+        Vector2 musicMuteButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 4,
+                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.2f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener musicMuteButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("Click", "mute");
+                music.pauseMusic();
+                parentScreen.setMute(true);
+            }
+        };
+        Actor musicMuteActor = createActorForButton(this.mute_button, musicMuteButtonPosition, width, height, musicMuteButtonListener);
+        stage.addActor(musicMuteActor);
+
+        Vector2 soundMuteButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) ) / 4,
+                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.7f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener soundMuteButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("Click", "mute");
+                soundEffect.setMute(true);
+            }
+        };
+        Actor soundMuteActor = createActorForButton(this.mute_button, soundMuteButtonPosition, width, height, soundMuteButtonListener);
+        stage.addActor(soundMuteActor);
+
+        Vector2 musicunMuteButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) * 3) / 4,
+                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (1.2f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener musicunMuteButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("Click", "unmute");
+                music.contiuneMusic();
+                parentScreen.setMute(false);
+            }
+        };
+        Actor musicunMuteActor = createActorForButton(this.unmute_button, musicunMuteButtonPosition, width, height, musicunMuteButtonListener);
+        stage.addActor(musicunMuteActor);
+
+        Vector2 soundunMuteButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (1 - this.BUTTON_WIDTH_RATIO) * 3 ) / 4,
+                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.7f  - this.BUTTON_HEIGHT_RATIO)) / 2);
+        ClickListener soundunMuteButtonListener = new ClickListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("Click", "unmute");
+                soundEffect.setMute(false);
+            }
+        };
+        Actor soundunMuteActor = createActorForButton(this.unmute_button, soundunMuteButtonPosition, width, height, soundunMuteButtonListener);
+        stage.addActor(soundunMuteActor);
     }
 
 
@@ -98,7 +174,6 @@ public class SettingScreen extends MyScreen {
     }
 
     public void handleInput() {
-
     }
 
     public void update(float dt) {

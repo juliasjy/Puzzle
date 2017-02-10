@@ -20,7 +20,6 @@ import com.rosehulman.edu.Utils.Utils;
  */
 
 public class MyScreen implements Screen {
-    public Music backgroundMusic;
     public Stage stage;
 
     //game related
@@ -30,6 +29,7 @@ public class MyScreen implements Screen {
 
     //parent screen
     public MyScreen parentScreen;
+    public boolean isMute;
 
     public MyScreen(Puzzle game, MyScreen parent){
         this.game = game;
@@ -84,17 +84,15 @@ public class MyScreen implements Screen {
 
     };
 
-    public void createMusic(String music){
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(music));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0.1f);
-        backgroundMusic.play();
-    }
-
     public Actor createActorForButton(Texture texture, Vector2 position, float width, float height, ClickListener listener) {
         MyActor actor = new MyActor(texture, position, width, height);
         actor.setTouchable(Touchable.enabled);
         actor.addListener(listener);
         return actor;
+    }
+
+    public void setMute(boolean mute) {
+        this.isMute = mute;
+        Gdx.app.log("Set", "mute" + mute);
     }
 }

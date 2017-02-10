@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Scenes.PlayScreen;
+import com.rosehulman.edu.Sounds.MySoundEffect;
 
 /**
  * Created by mot on 2/4/17.
@@ -20,7 +21,11 @@ public class ObjectExplosion extends AbstractAnimationSprite {
         super(duration, bounds);
         float shiftX = (xScale - 1) * bounds.width / 2;
         float shiftY = (yScale - 1) * bounds.height / 2;
+
         setBounds(bounds.x - shiftX, bounds.y - shiftY, bounds.width * xScale, bounds.height * yScale);
+        this.sound = new MySoundEffect("sounds/objectExplosion.ogg");
+        this.sound.setVolume(0.1f);
+        this.sound.playSound();
     }
 
     @Override
