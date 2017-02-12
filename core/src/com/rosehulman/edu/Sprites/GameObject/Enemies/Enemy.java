@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.rosehulman.edu.Scenes.PlayScreen;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
 import com.rosehulman.edu.Utils.Constants;
+import com.rosehulman.edu.Utils.Score;
 
 /**
  * Created by mot on 1/31/17.

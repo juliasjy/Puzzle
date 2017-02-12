@@ -1,13 +1,10 @@
 package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -30,14 +27,16 @@ public class ScoreScreen extends MyScreen {
     private SaveFile sf;
     private BitmapFont font;
 
-    public ScoreScreen(Puzzle game, MenuScreen parent) {
+    public ScoreScreen(Puzzle game, MenuScreen parent, SaveFile sf) {
         super(game, parent);
         this.background = new Texture("score_background.jpg");
         this.return_button = new Texture("buttons/button_return.png");
+        this.sf = sf;
         this.font = game.font;
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
         createStage();
         initScores();
+        Gdx.app.log("score", names[0] + highScores[0]);
     }
 
     @Override
@@ -123,10 +122,8 @@ public class ScoreScreen extends MyScreen {
     }
 
     public void initScores(){
-        sf = new SaveFile();
-        sf.load();
+        sf.save();
         highScores = sf.s.getHighScores();
         names = sf.s.getNames();
-        Gdx.app.log("score", names[9] + highScores[9]);
     }
 }

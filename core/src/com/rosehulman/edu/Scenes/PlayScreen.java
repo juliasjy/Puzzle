@@ -171,11 +171,11 @@ public class PlayScreen implements Screen, InputProcessor {
         for (AbstractBullet b : bulletList) {
             b.draw(this.game.getBatch());
         }
-//
+
         for (Enemy e: enemyList) {
             e.draw(this.game.getBatch());
         }
-//
+
         for (AbstractAnimationSprite a: this.animationList) {
             a.draw(this.game.getBatch());
         }
@@ -340,6 +340,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public void onHeroDie() {
         Gdx.input.getTextInput(this.inputListener, "Mark Your Name", "", "Type Your Name.");
+        Score s = new Score();
+        Gdx.app.log("score", s.getScore() + "");
         game.setScreen(new MenuScreen(game, null));
     }
 

@@ -17,9 +17,14 @@ public class SaveFile {
 
     public static Score s;
     private static FileHandle f;
+    private static int NUM_SCORES = 10;
 
-    public SaveFile(){
-        init();
+    public SaveFile(Score s){
+        f = Gdx.files.local("highScores.txt");
+        this.s = s;
+//        s.init();
+//        save();
+        load();
     }
 
     public static void save(){
@@ -27,7 +32,7 @@ public class SaveFile {
             String[] names = s.getNames();
             int[] highScores = s.getHighScores();
             f.write(false);
-            for(int i  = 0; i < s.NUM_SCORES; i++) {
+            for(int i  = 0; i < NUM_SCORES; i++) {
                 f.writeString(names[i] + " ", true);
                 f.writeString(String.valueOf(highScores[i]) + "\n", true);
             }
@@ -39,10 +44,10 @@ public class SaveFile {
 
     public static void load(){
         try{
-            String[] names = new String[s.NUM_SCORES];
-            int[] highScores = new int[s.NUM_SCORES];
+            String[] names = new String[NUM_SCORES];
+            int[] highScores = new int[NUM_SCORES];
             String[] people = f.readString().split("\n");
-            for(int i = 0 ; i < s.NUM_SCORES; i++){
+            for(int i = 0 ; i < NUM_SCORES; i++){
                 String[] person = people[i].split(" ");
                 names[i] = person[0];
                 highScores[i] = Integer.parseInt(person[1]);
@@ -53,13 +58,5 @@ public class SaveFile {
             e.printStackTrace();
             Gdx.app.exit();
         }
-    }
-
-
-    public static void init(){
-        f = Gdx.files.local("highScores.txt");
-        s = new Score();
-        s.init();
-        save();
     }
 }
