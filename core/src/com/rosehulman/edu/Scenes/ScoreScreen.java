@@ -1,35 +1,43 @@
 package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rosehulman.edu.Puzzle;
+import com.rosehulman.edu.Utils.SaveFile;
 import com.rosehulman.edu.Utils.Utils;
 
 /**
- * Created by suj1 on 1/22/2017.
+ * Created by suj1 on 2/12/2017.
  */
 
-public class HelpScreen extends MyScreen {
+public class ScoreScreen extends MyScreen {
     private Texture background;
     private Texture return_button;
+    private String highScore = "High Scores";
+    private int[] highScores;
+    private String[] names;
+    private SaveFile sf;
+    private BitmapFont font;
 
-    public HelpScreen(Puzzle game, MenuScreen parent) {
+    public ScoreScreen(Puzzle game, MenuScreen parent) {
         super(game, parent);
-        this.background = new Texture("help_background.jpg");
+        this.background = new Texture("score_background.jpg");
         this.return_button = new Texture("buttons/button_return.png");
+        this.font = game.font;
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
         createStage();
+        initScores();
     }
 
     @Override
@@ -74,6 +82,8 @@ public class HelpScreen extends MyScreen {
         batch.begin();
         batch.draw(this.background, 0, 0, Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT));
 
+        this.font.draw(batch, "HELLO", Utils.scaleWithPPM(this.game.V_WIDTH) /4, Utils.scaleWithPPM(this.game.V_HEIGHT) /4);
+
         batch.end();
         this.stage.act(delta);
         this.stage.draw();
@@ -102,13 +112,21 @@ public class HelpScreen extends MyScreen {
     @Override
     public void dispose() {
         stage.dispose();
+        font.dispose();
     }
 
     public void handleInput() {
-
     }
 
     public void update(float dt) {
         handleInput();
+    }
+
+    public void initScores(){
+        sf = new SaveFile();
+        sf.load();
+        highScores = sf.s.getHighScores();
+        names = sf.s.getNames();
+        Gdx.app.log("score", names[9] + highScores[9]);
     }
 }

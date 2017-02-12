@@ -25,8 +25,7 @@ import com.rosehulman.edu.Sprites.GameObject.Enemies.Enemy;
 import com.rosehulman.edu.Sprites.GameObject.Hero;
 import com.rosehulman.edu.Tools.B2WorldCreator;
 import com.rosehulman.edu.Tools.PuzzleContactListener;
-import com.rosehulman.edu.Utils.Constants;
-import com.rosehulman.edu.Utils.Utils;
+import com.rosehulman.edu.Utils.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,11 +79,12 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public MyMusic music;
     private boolean isMute;
+    private com.rosehulman.edu.Utils.InputName inputListener;
 
     private float time = 0;
     private boolean isPaused;
 
-    public PlayScreen(Puzzle game, boolean isMute) {
+    public PlayScreen(Puzzle game, boolean isMute, com.rosehulman.edu.Utils.InputName inputListener) {
         this.mapLoader = new TmxMapLoader();
         this.map = mapLoader.load("tiledMap/Fly.tmx");
 
@@ -141,6 +141,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         this.isMute = isMute;
         this.music = new MyMusic("music/level" + level + ".wav", this.isMute);
+        this.inputListener = inputListener;
 
         Gdx.input.setInputProcessor(this);
 
@@ -338,6 +339,7 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
     public void onHeroDie() {
+        Gdx.input.getTextInput(this.inputListener, "Mark Your Name", "", "Type Your Name.");
         game.setScreen(new MenuScreen(game, null));
     }
 

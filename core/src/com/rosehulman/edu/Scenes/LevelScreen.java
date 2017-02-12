@@ -32,11 +32,11 @@ public class LevelScreen extends MyScreen {
     public LevelScreen(Puzzle game, MyScreen parent) {
         super(game, parent);
         this.background = new Texture("level_background.jpg");
-        this.return_button = new Texture("button_return.png");
-        this.level1_button = new Texture("button_level-1.png");
-        this.level2_button = new Texture("button_level-2.png");
-        this.level3_button = new Texture("button_level-3.png");
-        this.level4_button = new Texture("button_level-4.png");
+        this.return_button = new Texture("buttons/button_return.png");
+        this.level1_button = new Texture("buttons/button_level-1.png");
+        this.level2_button = new Texture("buttons/button_level-2.png");
+        this.level3_button = new Texture("buttons/button_level-3.png");
+        this.level4_button = new Texture("buttons/button_level-4.png");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
         createStage();
     }

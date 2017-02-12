@@ -32,9 +32,9 @@ public class SettingScreen extends MyScreen {
         super(game, parent);
         this.music = music;
         this.background = new Texture("setting_background.jpg");
-        this.return_button = new Texture("button_return.png");
-        this.mute_button = new Texture("button_mute.png");
-        this.unmute_button = new Texture("button_unmute.png");
+        this.return_button = new Texture("buttons/button_return.png");
+        this.mute_button = new Texture("buttons/button_mute.png");
+        this.unmute_button = new Texture("buttons/button_unmute.png");
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
         createStage();
     }
