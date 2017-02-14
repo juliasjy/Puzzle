@@ -39,6 +39,14 @@ public abstract class Enemy extends GameObject {
     public void update(float dt)
     {
         super.update(dt);
+
+        if (this.objectState == Constants.GameObjectState.INACTIVE) {
+            if (!playScreen.isBeyondTopBoundary(this.body.getPosition())) {
+                this.setState(Constants.GameObjectState.ACTIVE);
+            } else {
+                return;
+            }
+        }
         this.tintTimer -= dt;
         if (this.tintTimer < 0) {
             this.setColor(1f,1f,1f,1.0f);

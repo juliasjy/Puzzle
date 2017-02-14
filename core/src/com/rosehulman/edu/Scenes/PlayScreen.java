@@ -82,10 +82,13 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
     private Hero hero;
     private int level = 1;
 
+    private float gameOverCountDown;
+    private boolean isGameOver;
+
     public MyMusic music;
     private boolean isMute;
 
-    private float time = 0;
+    private float timer;
     private boolean isPaused;
 
     public PlayScreen(Puzzle game, boolean isMute) {
@@ -101,9 +104,9 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
         int mapPixelHeight = height * tilePixelHeight;
         mapTotalHeight = Utils.scaleWithPPM(mapPixelHeight);
         mapTotalWidth = Utils.scaleWithPPM(mapPixelWidth);
-
+        this.isGameOver = false;
         this.isPaused = false;
-        this.time = 0;
+        this.timer = -1;
 
         this.score = new Score();
         this.hud = new HUD(game.batch, this.score);
@@ -198,7 +201,6 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
     @Override
     public void pause() {
         this.music.pauseMusic();
-
     }
 
     @Override
@@ -208,7 +210,7 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
 
     @Override
     public void hide() {
-
+        this.music.pauseMusic();
     }
 
     @Override
@@ -218,13 +220,13 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
 
 
     public void handleInput(float dt) {
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (this.gamePhase == Constants.GamePhase.NORMAL) {
-                this.gamePhase = Constants.GamePhase.PAUSED;
-            } else {
-                this.gamePhase = Constants.GamePhase.NORMAL;
-            }
-        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+//            if (this.gamePhase == Constants.GamePhase.NORMAL) {
+//                this.gamePhase = Constants.GamePhase.PAUSED;
+//            } else {
+//                this.gamePhase = Constants.GamePhase.NORMAL;
+//            }
+//        }
     }
 
 
@@ -253,7 +255,7 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
         }
 
 
-        this.time += dt;
+        this.timer += dt;
 //        this.handleInput(dt);
 
         world.step(dt, 6, 2);
@@ -275,11 +277,17 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
             a.update(dt);
         }
 
+
+        if (this.isGameOver) {
+            this.gameOverCountDown -= dt;
+            if (this.gameOverCountDown < -0) {
+                game.setScreen(new MenuScreen(game, null));
+            }
+        }
+
         removeBullets(bulletList);
         removeEnemies(enemyList);
         removeAnimationSprites(animationList);
-
-
         renderer.setView(gameCam);
     }
 
@@ -346,10 +354,14 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
     }
 
     public void onHeroDie() {
+        if (this.isGameOver) {
+            return;
+        }
         if (this.game.sk.getLowestScore() < this.score.getScore()) {
             Gdx.input.getTextInput(this, "Mark Your Name", "", "Type Your Name.");
         }
-        game.setScreen(new MenuScreen(game, null));
+        this.gameOverCountDown = 5;
+        this.isGameOver = true;
     }
 
     @Override
@@ -382,6 +394,9 @@ public class PlayScreen implements Screen, InputProcessor, Input.TextInputListen
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if (this.isGameOver) {
+            return false;
+        }
         Vector2 vec = this.gamePort.unproject(new Vector2(screenX, screenY));
         float tx = vec.x - lastX;
         float ty = vec.y - lastY;

@@ -87,7 +87,10 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
     @Override
     public void draw (Batch batch) {
         super.draw(batch);
-        this.healthBar.draw(batch);
+        if (this.healthBar != null) {
+            this.healthBar.draw(batch);
+        }
+
     }
 
     @Override
@@ -106,15 +109,8 @@ public abstract class GameObject extends Sprite implements  InputHandler, Object
         }
         //set sprite relativePosition corresponding to location of physics body
         setPosition(this.body.getPosition().x - getWidth() / 2.0f, this.body.getPosition().y - getHeight() / 2.0f);
-        if (this.objectState == Constants.GameObjectState.INACTIVE) {
-            if (!playScreen.isBeyondTopBoundary(this.body.getPosition())) {
-                this.setState(Constants.GameObjectState.ACTIVE);
-            } else {
-                return;
-            }
-        }
 
-//        this.setColor(1,1,1,1);
+
         this.healthBar.update(dt);
         if (this.weapon != null) {
             this.weapon.update(dt);

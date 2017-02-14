@@ -2,7 +2,6 @@ package com.rosehulman.edu.Sprites.GameObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,11 +11,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Scenes.PlayScreen;
-
-import com.rosehulman.edu.Sounds.MySoundEffect;
+import com.rosehulman.edu.Sprites.Animation.ObjectExplosion;
 import com.rosehulman.edu.Sprites.Bullet.Bullet;
 import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
 import com.rosehulman.edu.Sprites.Weapon.HeroWeapons.HeroCommonWeapon;
@@ -47,9 +44,13 @@ public class Hero extends GameObject {
         this.collisionDamage = 99999;
         this.health = 500;
         this.maxHealth = 500;
+        this.setState(Constants.GameObjectState.ACTIVE);
         setBounds(this.body.getPosition().x, this.body.getPosition().y, Utils.scaleWithPPM(96), Utils.scaleWithPPM(96));
 //        configureAnimation();
     }
+
+
+
 
     @Override
     public void onHit(Bullet bullet) {
@@ -176,16 +177,20 @@ public class Hero extends GameObject {
 
     @Override
     public void update(float dt) {
-        super.update(dt);
-        this.stateTimer += dt;
-//        this.setRegion(this.getNextFrame(dt));
 
-
-        if (this.health <= 0) {
-            //TODO
-            this.playScreen.onHeroDie();
+        if (this.objectState != Constants.GameObjectState.ACTIVE) {
+            return;
+        }
+        setPosition(this.body.getPosition().x - getWidth() / 2.0f, this.body.getPosition().y - getHeight() / 2.0f);
+        this.healthBar.update(dt);
+        if (this.weapon != null) {
+            this.weapon.update(dt);
         }
 
+        this.stateTimer += dt;
+        if (this.health <= 0) {
+            this.setState(Constants.GameObjectState.DEAD);
+        }
     }
 
 
@@ -198,13 +203,22 @@ public class Hero extends GameObject {
 
     @Override
     public void onSetToDeadState() {
-        System.out.println("Hero died");
+        ObjectExplosion be = new ObjectExplosion(1f, this.getBoundingRectangle());
+        this.playScreen.addAnimationSprite(be);
+        this.playScreen.onHeroDie();
+        this.healthBar = null;
+        this.setState(Constants.GameObjectState.REMOVABLE);
     }
 
     @Override
-    public void onSetToRemovableState() {}
+    public void onSetToRemovableState() {
+        this.body.setActive(false);
+        this.body.setLinearVelocity(0, 0);
+        this.setPosition(-1, -1);
+    }
 
     @Override
-    public void onSetToCleaningPhysicsBodyState() {}
+    public void onSetToCleaningPhysicsBodyState() {
+    }
 
 }

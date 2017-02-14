@@ -143,6 +143,7 @@ public class BOSS1 extends Enemy {
         this.playScreen.addAnimationSprite(be);
         this.playScreen.addScore(2000);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
+        this.playScreen.onHeroDie();
     }
 
     @Override

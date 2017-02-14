@@ -14,7 +14,6 @@ import java.util.List;
 public class ScoreUtils {
 
     public static String DEFAULT_FILE_NAME = "highScores.txt";
-//    private static int NUM_SCORES = 10;
 
     //Takes either a score keeper or a list of scores
     //Using default file name while file name is not provided
@@ -27,9 +26,7 @@ public class ScoreUtils {
     public static void saveToFile(List<Score> scores) {
         ScoreUtils.saveToFile(DEFAULT_FILE_NAME, scores);
     }
-
     public static void saveToFile(String fileName, List<Score> scores){
-
         FileHandle f = Gdx.files.local(fileName);
         try{
             //clear the previous file
@@ -38,21 +35,15 @@ public class ScoreUtils {
             for(int i  = 0; i < scores.size(); i++) {
                 Score sc = scores.get(i);
                 f.writeString(sc.getPlayer() + " " + sc.getScore() + "\n",true);
-                System.out.print(sc.getPlayer() + " " + sc.getScore() + "\n");
-//                f.writeString(names[i] + " ", true);
-//                f.writeString(String.valueOf(highScores[i]) + "\n", true);
             }
         } catch (Exception e){
             e.printStackTrace();
             Gdx.app.exit();
         }
     }
-
     public static List<Score> loadScores() {
         return ScoreUtils.loadScores(DEFAULT_FILE_NAME);
     }
-
-
     public static List<Score> loadScores(String fileName){
         List<Score> result = new ArrayList<Score>();
         FileHandle f = Gdx.files.local(fileName);
