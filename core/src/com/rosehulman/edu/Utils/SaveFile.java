@@ -3,27 +3,21 @@ package com.rosehulman.edu.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 /**
  * Created by suj1 on 2/12/2017.
  */
 
 public class SaveFile {
 
-    public static Score s;
+    public static Score_SJY s;
     private static FileHandle f;
     private static int NUM_SCORES = 10;
 
-    public SaveFile(Score s){
+    public SaveFile(Score_SJY s){
         f = Gdx.files.local("highScores.txt");
         this.s = s;
-//        s.init();
-//        save();
+        s.init();
+        save();
         load();
     }
 

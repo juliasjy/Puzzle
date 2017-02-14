@@ -17,15 +17,17 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.rosehulman.edu.Sounds.MyMusic;
 import com.rosehulman.edu.Puzzle;
+import com.rosehulman.edu.Sounds.MyMusic;
 import com.rosehulman.edu.Sprites.Animation.AbstractAnimationSprite;
 import com.rosehulman.edu.Sprites.Bullet.AbstractBullet;
 import com.rosehulman.edu.Sprites.GameObject.Enemies.Enemy;
 import com.rosehulman.edu.Sprites.GameObject.Hero;
 import com.rosehulman.edu.Tools.B2WorldCreator;
 import com.rosehulman.edu.Tools.PuzzleContactListener;
-import com.rosehulman.edu.Utils.*;
+import com.rosehulman.edu.Utils.Constants;
+import com.rosehulman.edu.Utils.Score;
+import com.rosehulman.edu.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +37,7 @@ import java.util.List;
  * Created by mot on 1/14/17.
  */
 
-public class PlayScreen implements Screen, InputProcessor {
+public class PlayScreen implements Screen, InputProcessor, Input.TextInputListener {
 
     //game related
     private Puzzle game;
@@ -71,20 +73,22 @@ public class PlayScreen implements Screen, InputProcessor {
     public static TextureAtlas bulletExplosionAtlas;
     //box2d related
     public World world;
+    private Score score;
+    private HUD hud;
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator b2wc;
+
 
     private Hero hero;
     private int level = 1;
 
     public MyMusic music;
     private boolean isMute;
-    private com.rosehulman.edu.Utils.InputName inputListener;
 
     private float time = 0;
     private boolean isPaused;
 
-    public PlayScreen(Puzzle game, boolean isMute, com.rosehulman.edu.Utils.InputName inputListener) {
+    public PlayScreen(Puzzle game, boolean isMute) {
         this.mapLoader = new TmxMapLoader();
         this.map = mapLoader.load("tiledMap/Fly.tmx");
 
@@ -100,6 +104,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
         this.isPaused = false;
         this.time = 0;
+
+        this.score = new Score();
+        this.hud = new HUD(game.batch, this.score);
 
         this.gamePhase = Constants.GamePhase.NORMAL;
 
@@ -127,12 +134,7 @@ public class PlayScreen implements Screen, InputProcessor {
         this.b2wc = new B2WorldCreator(this);
         hero = new Hero(world,this,null);
 
-
         b2wc.addStaicBodiesToWorld(world, map);
-
-
-
-
         this.contactListener = new PuzzleContactListener();
         world.setContactListener(this.contactListener);
 
@@ -141,7 +143,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
         this.isMute = isMute;
         this.music = new MyMusic("music/level" + level + ".wav", this.isMute);
-        this.inputListener = inputListener;
 
         Gdx.input.setInputProcessor(this);
 
@@ -151,7 +152,7 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public void show()
     {
-//        music.startMusic();
+        music.startMusic();
     }
 
     @Override
@@ -160,10 +161,16 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.render();
 //        b2dr.render(world, this.gameCam.combined);
 
+        renderer.render();
+        hud.stage.draw();
+
+
+
+
         game.getBatch().setProjectionMatrix(gameCam.combined);
+
         this.game.getBatch().begin();
 
         this.hero.draw(this.game.getBatch());
@@ -239,7 +246,7 @@ public class PlayScreen implements Screen, InputProcessor {
             gameCam.update();
 
             if (this.topY() >= mapTotalHeight) {
-                System.out.println("SET TO BOSS FIGHT PHASE");
+//                System.out.println("SET TO BOSS FIGHT PHASE");
                 this.gamePhase = Constants.GamePhase.BOSS_FIGHT;
                 this.hero.body.setLinearVelocity(0, 0);
             }
@@ -253,7 +260,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
 
-
+        hud.update(dt);
         hero.update(dt);
 
         for (AbstractBullet bullet : bulletList) {
@@ -282,7 +289,7 @@ public class PlayScreen implements Screen, InputProcessor {
         for (int i = 0; i < objects.size(); i++) {
             if (objects.get(i).getState() == Constants.GameObjectState.REMOVABLE) {
                 objects.remove(i);
-                System.out.println("Object removed " + counter);
+//                System.out.println("Object removed " + counter);
                 counter++;
                 i --;
             }
@@ -339,9 +346,9 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
     public void onHeroDie() {
-        Gdx.input.getTextInput(this.inputListener, "Mark Your Name", "", "Type Your Name.");
-        Score s = new Score();
-        Gdx.app.log("score", s.getScore() + "");
+        if (this.game.sk.getLowestScore() < this.score.getScore()) {
+            Gdx.input.getTextInput(this, "Mark Your Name", "", "Type Your Name.");
+        }
         game.setScreen(new MenuScreen(game, null));
     }
 
@@ -392,6 +399,12 @@ public class PlayScreen implements Screen, InputProcessor {
         this.lastX = vec.x;
         this.lastY = vec.y;
         return true;
+    }
+
+
+    public void addScore(int score) {
+        this.score.addScore(score);
+//        System.out.println(this.score.getScore());
     }
 
     @Override
@@ -451,5 +464,16 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public boolean isBeyondRightBoundary(Vector2 position) {
         return position.x  > this.gamePort.getWorldWidth() + bufferX;
+    }
+
+    @Override
+    public void input(String text) {
+        this.score.setPlayer(text);
+        this.game.sk.addScore(new Score(score.getScore(), score.getPlayer()));
+    }
+
+    @Override
+    public void canceled() {
+
     }
 }

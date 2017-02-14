@@ -2,7 +2,6 @@ package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -75,13 +74,11 @@ public class MyScreen implements Screen {
     public void createStage () {
         stage = new Stage(this.gamePort);
         stage.getViewport().update((int) Utils.scaleWithPPM(this.game.V_WIDTH),(int) Utils.scaleWithPPM(this.game.V_HEIGHT));
-
         createActors(stage);
         Gdx.input.setInputProcessor(stage);
     }
 
     public void createActors(Stage stage){
-
     };
 
     public Actor createActorForButton(Texture texture, Vector2 position, float width, float height, ClickListener listener) {

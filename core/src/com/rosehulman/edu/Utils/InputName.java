@@ -1,7 +1,6 @@
 package com.rosehulman.edu.Utils;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Input;
 
 /**

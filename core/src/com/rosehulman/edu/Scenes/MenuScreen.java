@@ -28,8 +28,8 @@ public class MenuScreen extends MyScreen{
     private float BUTTON_WIDTH_RATIO = 0.4f;
     private float BUTTON_HEIGHT_RATIO = 0.08f;
     private MyMusic music;
-    private SaveFile sf;
-    private Score s;
+//    private SaveFile sf;
+//    private Score_SJY s;
     private com.rosehulman.edu.Utils.InputName inputListener;
 
     public MenuScreen(Puzzle game, MyScreen parent) {
@@ -44,8 +44,8 @@ public class MenuScreen extends MyScreen{
         this.isMute = false;
         this.music = new MyMusic("music/main.wav", this.isMute);
         this.music.startMusic();
-        this.s = new Score();
-        this.sf = new SaveFile(s);
+//        this.s = new Score_SJY();
+//        this.sf = new SaveFile(s);
         this.inputListener = new com.rosehulman.edu.Utils.InputName();
 //        getNameAndScore();
         createStage();
@@ -63,7 +63,7 @@ public class MenuScreen extends MyScreen{
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new PlayScreen(game, isMute, inputListener));
+                game.setScreen(new PlayScreen(game, isMute));
                 stage.dispose();
                 Gdx.app.log("Click", "Game");
                 music.disposeMusic();
@@ -122,8 +122,8 @@ public class MenuScreen extends MyScreen{
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 //                s.addHighScore(200, "julia");
-                game.setScreen(new ScoreScreen(game, MenuScreen.this, sf));
-                Gdx.app.log("Click", "Score");
+                game.setScreen(new ScoreScreen(game, MenuScreen.this));
+                Gdx.app.log("Click", "Score_SJY");
             }
         };
         Actor scoreActor = createActorForButton(this.score_button, scoreButtonPosition, width, height, scoreButtonListener);

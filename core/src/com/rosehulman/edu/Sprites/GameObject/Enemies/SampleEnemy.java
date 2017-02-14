@@ -16,7 +16,6 @@ import com.rosehulman.edu.Sprites.Bullet.Bullet;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
 import com.rosehulman.edu.Sprites.Weapon.Abstract.Weapon;
 import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.ComposeWeapon.Trident;
-import com.rosehulman.edu.Sprites.Weapon.EnemyWeapons.SingleWeapon.EnemyWeaponLinear;
 import com.rosehulman.edu.Utils.Constants;
 import com.rosehulman.edu.Utils.SpriteUtils;
 import com.rosehulman.edu.Utils.Utils;
@@ -129,12 +128,12 @@ public class SampleEnemy extends Enemy {
     public void onSetToInactiveState() {
         this.body.setActive(false);
         this.body.setLinearVelocity(0, 0);
-        System.out.println("Enemy set to inactive state");
+//        System.out.println("Enemy set to inactive state");
     }
 
     @Override
     public void onSetToActiveState() {
-        System.out.println("Enemy set to active state");
+//        System.out.println("Enemy set to active state");
         this.body.setActive(true);
         this.body.setLinearVelocity(0, -0.5f);
     }
@@ -144,6 +143,7 @@ public class SampleEnemy extends Enemy {
     {
         ObjectExplosion be = new ObjectExplosion(1f, this.getBoundingRectangle());
         this.playScreen.addAnimationSprite(be);
+        this.playScreen.addScore(200);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
     }
 

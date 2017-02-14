@@ -141,6 +141,7 @@ public class BOSS1 extends Enemy {
     {
         ObjectExplosion be = new ObjectExplosion(1f, this.getBoundingRectangle());
         this.playScreen.addAnimationSprite(be);
+        this.playScreen.addScore(2000);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
     }
 

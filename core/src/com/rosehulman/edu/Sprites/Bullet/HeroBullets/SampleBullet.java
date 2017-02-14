@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.rosehulman.edu.Puzzle;
 import com.rosehulman.edu.Scenes.PlayScreen;
 import com.rosehulman.edu.Sounds.MySoundEffect;
@@ -90,7 +89,6 @@ public class SampleBullet extends AbstractBullet {
         BulletExplosion be = new BulletExplosion(0.4f, this.getBoundingRectangle());
         this.sc.addAnimationSprite(be);
         this.setState(Constants.GameObjectState.CLEANING_PHYSICS_BODY);
-
     }
 
     @Override
@@ -106,6 +104,7 @@ public class SampleBullet extends AbstractBullet {
     public void onHit(GameObject enemy)
     {
         super.onHit(enemy);
+        this.sc.addScore(5);
         this.sound.playSound();
     }
 

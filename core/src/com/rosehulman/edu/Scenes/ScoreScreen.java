@@ -1,6 +1,7 @@
 package com.rosehulman.edu.Scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -9,10 +10,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.rosehulman.edu.Puzzle;
-import com.rosehulman.edu.Utils.SaveFile;
+import com.rosehulman.edu.Utils.Score;
 import com.rosehulman.edu.Utils.Utils;
+
+import java.util.List;
 
 /**
  * Created by suj1 on 2/12/2017.
@@ -22,28 +28,25 @@ public class ScoreScreen extends MyScreen {
     private Texture background;
     private Texture return_button;
     private String highScore = "High Scores";
-    private int[] highScores;
-    private String[] names;
-    private SaveFile sf;
+    private List<Score> scoreList;
     private BitmapFont font;
 
-    public ScoreScreen(Puzzle game, MenuScreen parent, SaveFile sf) {
+    public ScoreScreen(Puzzle game, MenuScreen parent) {
         super(game, parent);
         this.background = new Texture("score_background.jpg");
         this.return_button = new Texture("buttons/button_return.png");
-        this.sf = sf;
+        this.scoreList = game.sk.getScores();
         this.font = game.font;
+        this.gamePort = new StretchViewport(this.game.V_WIDTH, this.game.V_HEIGHT, gameCam);
         gameCam.position.set(Utils.scaleWithPPM(this.game.V_WIDTH) / 2, Utils.scaleWithPPM(this.game.V_HEIGHT) / 2 , 0);
         createStage();
-        initScores();
-        Gdx.app.log("score", names[0] + highScores[0]);
     }
 
     @Override
     public void createActors(Stage stage){
-        float side = (Utils.scaleWithPPM(this.game.V_WIDTH) * 0.1f);
-        Vector2 returnButtonPosition = new Vector2((Utils.scaleWithPPM(this.game.V_WIDTH) * (0.05f) ) / 2,
-                (Utils.scaleWithPPM(this.game.V_HEIGHT) * (0.05f)) / 2);
+        float side = (this.game.V_WIDTH * 0.1f);
+        Vector2 returnButtonPosition = new Vector2((this.game.V_WIDTH * (0.05f) ) / 2,
+                (this.game.V_HEIGHT * (0.05f)) / 2);
         ClickListener returnButtonListener = new ClickListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -56,18 +59,33 @@ public class ScoreScreen extends MyScreen {
         };
         Actor returnActor = createActorForButton(this.return_button, returnButtonPosition, side, side, returnButtonListener);
         stage.addActor(returnActor);
+
+
+
+        Table table = new Table();
+        table.top();
+        table.setFillParent(true);
+        table.padTop(200f);
+
+        for (Score s : scoreList) {
+            Label scoreLabel = new Label(String.format("%08d", s.getScore()), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+            Label nameLabel = new Label(s.getPlayer(), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+            scoreLabel.setFontScale(3f);
+            nameLabel.setFontScale(3f);
+
+            table.add(scoreLabel).expandX().padTop(15f);
+            table.add(nameLabel).expandX().padTop(15f);
+            table.row();
+        }
+        stage.addActor(table);
+
+
     }
 
 
     @Override
     public void show() {
-        stage = new Stage(this.gamePort);
-        stage.getViewport().update((int) Utils.scaleWithPPM(this.game.V_WIDTH),(int) Utils.scaleWithPPM(this.game.V_HEIGHT));
-
-        createActors(stage);
-        Gdx.input.setInputProcessor(stage);
-
-        Gdx.app.log("Click", "show");
+//        createStage();
     }
 
     @Override
@@ -75,17 +93,21 @@ public class ScoreScreen extends MyScreen {
         update(delta);
         Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        SpriteBatch batch = this.game.getBatch();
 
-        batch.setProjectionMatrix(gameCam.combined);
+
+
+
+
+        SpriteBatch batch = this.game.getBatch();
+//        batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         batch.draw(this.background, 0, 0, Utils.scaleWithPPM(this.game.V_WIDTH), Utils.scaleWithPPM(this.game.V_HEIGHT));
-
-        this.font.draw(batch, "HELLO", Utils.scaleWithPPM(this.game.V_WIDTH) /4, Utils.scaleWithPPM(this.game.V_HEIGHT) /4);
-
         batch.end();
-        this.stage.act(delta);
+
+
+//        this.stage.act(delta);
         this.stage.draw();
+
     }
 
     @Override
@@ -121,9 +143,4 @@ public class ScoreScreen extends MyScreen {
         handleInput();
     }
 
-    public void initScores(){
-        sf.save();
-        highScores = sf.s.getHighScores();
-        names = sf.s.getNames();
-    }
 }

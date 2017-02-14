@@ -1,15 +1,12 @@
 package com.rosehulman.edu.Sprites.GameObject.Enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.rosehulman.edu.Scenes.PlayScreen;
 import com.rosehulman.edu.Sprites.GameObject.GameObject;
 import com.rosehulman.edu.Utils.Constants;
-import com.rosehulman.edu.Utils.Score;
 
 /**
  * Created by mot on 1/31/17.

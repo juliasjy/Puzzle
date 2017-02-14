@@ -19,7 +19,7 @@ public class MySoundEffect {
 
     public void playSound(){
         if(!isMute) {
-            System.out.println("play sound");
+//            System.out.println("play sound");
             long id = this.mySound.play();
             this.mySound.setVolume(id, volume);
             this.mySound.setLooping(id, false);
